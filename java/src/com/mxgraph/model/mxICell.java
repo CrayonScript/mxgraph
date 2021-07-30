@@ -8,7 +8,6 @@ package com.mxgraph.model;
  */
 public interface mxICell
 {
-
 	/**
 	 * Returns the Id of the cell as a string.
 	 * 
@@ -50,6 +49,14 @@ public interface mxICell
 	void setGeometry(mxGeometry geometry);
 
 	/**
+	 * Returns the extended geometry
+	 *
+	 * @return Returns the cell extended geometry
+	 */
+	mxGeometry getExtendedGeometry();
+
+
+	/**
 	 * Returns the string that describes the style.
 	 * 
 	 * @return Returns the cell style.
@@ -60,6 +67,38 @@ public interface mxICell
 	 * Sets the string to be used as the style.
 	 */
 	void setStyle(String style);
+
+	/**
+	 * Returns true if the cell is a template.
+	 *
+	 * @return Returns true if the cell is a template.
+	 */
+	boolean isTemplate();
+
+	/**
+	 * Returns true if the cell is a shape.
+	 *
+	 * @return Returns true if the cell is a shape.
+	 */
+	boolean isShape();
+
+	/**
+	 * Returns true if the cell is a drop target.
+	 *
+	 * @return Returns true if the cell is a drop target.
+	 */
+	boolean isDropTarget();
+
+	CellFrameEnum[] getDropTargetFlags();
+
+	/**
+	 * Returns true if the cell is a drop source.
+	 *
+	 * @return Returns true if the cell is a drop source.
+	 */
+	boolean isDropSource();
+
+	CellFrameEnum[] getDropSourceFlags();
 
 	/**
 	 * Returns true if the cell is a vertex.
@@ -269,5 +308,4 @@ public interface mxICell
 	 * @return Returns a clone of this cell.
 	 */
 	Object clone() throws CloneNotSupportedException;
-
 }

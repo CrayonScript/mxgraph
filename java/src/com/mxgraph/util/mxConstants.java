@@ -3,6 +3,8 @@
  */
 package com.mxgraph.util;
 
+import java.awt.*;
+
 /**
  * Contains all global constants.
  */
@@ -26,9 +28,9 @@ public class mxConstants
 
 	/**
 	 * Defines the portion of the cell which is to be used as a connectable
-	 * region. Default is 0.3.
+	 * region. Default is 0.7.
 	 */
-	public static double DEFAULT_HOTSPOT = 0.3;
+	public static double DEFAULT_HOTSPOT = 0.7;
 
 	/**
 	 * Defines the minimum size in pixels of the portion of the cell which is
@@ -222,6 +224,11 @@ public class mxConstants
 	public static int ARROW_SIZE = 30;
 
 	/**
+	 *
+	 */
+	public static Color PNG_COLOR = Color.decode("0xE4DB8C");
+
+	/**
 	 * Defines the value for none. Default is "none".
 	 */
 	public static String NONE = "none";
@@ -361,7 +368,7 @@ public class mxConstants
 	 * Defines the key for the fill color of the swimlane background.
 	 * The value is a string expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_SWIMLANE_FILLCOLOR = "swimlaneFillColor";
 
@@ -369,7 +376,7 @@ public class mxConstants
 	 * Defines the key for the fillColor style. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_FILLCOLOR = "fillColor";
 
@@ -378,7 +385,7 @@ public class mxConstants
 	 * expression supported by mxUtils.parseColor. This is ignored if no fill
 	 * color is defined.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_GRADIENTCOLOR = "gradientColor";
 
@@ -399,7 +406,7 @@ public class mxConstants
 	 * Defines the key for the strokeColor style. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_STROKECOLOR = "strokeColor";
 
@@ -408,7 +415,7 @@ public class mxConstants
 	 * expression supported by mxUtils.parseColor. This style is only used
 	 * for SHAPE_SWIMLANE shapes.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_SEPARATORCOLOR = "separatorColor";
 
@@ -601,7 +608,7 @@ public class mxConstants
 	 * Defines the key for the label background color. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_LABEL_BACKGROUNDCOLOR = "labelBackgroundColor";
 
@@ -609,7 +616,7 @@ public class mxConstants
 	 * Defines the key for the label border color. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_LABEL_BORDERCOLOR = "labelBorderColor";
 
@@ -631,7 +638,7 @@ public class mxConstants
 	 * Defines the key for the indicatorColor style. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_INDICATOR_COLOR = "indicatorColor";
 
@@ -640,7 +647,7 @@ public class mxConstants
 	 * string expression supported by mxUtils.parseColor. This style is only
 	 * supported in SHAPE_LABEL shapes.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_INDICATOR_GRADIENTCOLOR = "indicatorGradientColor";
 
@@ -857,7 +864,7 @@ public class mxConstants
 	 * <code>String</code> and of the expression supported by
 	 * mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see mxUtils#parseColor(String)
 	 */
 	public static String STYLE_FONTCOLOR = "fontColor";
 
@@ -990,7 +997,75 @@ public class mxConstants
 	 * FONT_STRIKETHROUGH
 	 */
 	public static final int FONT_STRIKETHROUGH= 8;
-	
+
+	public static final String CRAYONSCRIPT_SHAPE_RUN_PARALLEL = "Parallel Block";
+
+	public static final String CRAYONSCRIPT_SHAPE_RUN_SEQUENTIAL = "Series Block";
+
+	public static final String CRAYONSCRIPT_SHAPE_RUN_SINGLE = "Block";
+
+	public static final String CRAYONSCRIPT_SHAPE_IF = "If Block";
+
+	public static final String CRAYONSCRIPT_SHAPE_ELSE_IF = "Else Block";
+
+	public static final String CRAYONSCRIPT_SHAPE_WHILE = "While Block";
+
+	public static final String CRAYONSCRIPT_SHAPE_FOR = "For Block";
+
+	public static final String CRAYONSCRIPT_SHAPE_PARALLEL_EXTENSION = "Add Parallel";
+
+	public static final String CRAYONSCRIPT_SHAPE_SEQUENTIAL_EXTENSION = "Add Series";
+
+	public static final String CRAYONSCRIPT_SHAPE_ASSIGN = "Assignment";
+
+	public static final String CRAYONSCRIPT_SHAPE_PROPERTY = "Property";
+
+	public static final String CRAYONSCRIPT_SHAPE_FUNCTION = "Function";
+
+	public static final String CRAYONSCRIPT_SHAPE_FOR_IN_RANGE = "For In Range";
+
+	public static final String CRAYONSCRIPT_SHAPE_FOR_EACH_EXPR = "For Each";
+
+	public static final String CRAYONSCRIPT_SHAPE_WHILE_BOOLEAN_EXPR = "While Boolean Expr";
+
+	public static final String CRAYONSCRIPT_SHAPE_EQUALS = "Equals";
+
+	public static final String CRAYONSCRIPT_SHAPE_NOTEQUALS = "Not Equals";
+
+	public static final String CRAYONSCRIPT_SHAPE_GT = "Greater Than";
+
+	public static final String CRAYONSCRIPT_SHAPE_GT_OR_EQUALS = "Greater Than Or Equals";
+
+	public static final String CRAYONSCRIPT_SHAPE_LT = "Less Than";
+
+	public static final String CRAYONSCRIPT_SHAPE_LT_OR_EQUALS = "Less Than Or Equals";
+
+	public static final String CRAYONSCRIPT_SHAPE_AND = "And";
+
+	public static final String CRAYONSCRIPT_SHAPE_OR = "Or";
+
+	public static final String CRAYONSCRIPT_SHAPE_NOT = "Not";
+
+	public static final String CRAYONSCRIPT_SHAPE_MOD = "Mod";
+
+	public static final String CRAYONSCRIPT_SHAPE_MIN = "Min";
+
+	public static final String CRAYONSCRIPT_SHAPE_MAX = "Max";
+
+	public static final String CRAYONSCRIPT_SHAPE_WAIT_FOR = "Wait For";
+
+	public static final String CRAYONSCRIPT_SHAPE_MARKER = "Marker";
+
+	public static final String CRAYONSCRIPT_SHAPE_TEMPLATE = "template";
+
+	public static final String CRAYONSCRIPT_SHAPE_EVENT = "Event";
+
+	public static final String CRAYONSCRIPT_MAIN_GRAPH = "Main Graph";
+
+	public static final String CRAYONSCRIPT_NEW_FUNCTION = "New Function";
+
+	public static final String CRAYONSCRIPT_NEW_OBJECT = "New Object";
+
 	/**
 	 * SHAPE_RECTANGLE
 	 */

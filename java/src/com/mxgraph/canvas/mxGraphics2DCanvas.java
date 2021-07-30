@@ -3,54 +3,23 @@
  */
 package com.mxgraph.canvas;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Paint;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.CellRendererPane;
-
-import com.mxgraph.shape.mxActorShape;
-import com.mxgraph.shape.mxArrowShape;
-import com.mxgraph.shape.mxCloudShape;
-import com.mxgraph.shape.mxConnectorShape;
-import com.mxgraph.shape.mxCurveShape;
-import com.mxgraph.shape.mxCylinderShape;
-import com.mxgraph.shape.mxDefaultTextShape;
-import com.mxgraph.shape.mxDoubleEllipseShape;
-import com.mxgraph.shape.mxDoubleRectangleShape;
-import com.mxgraph.shape.mxEllipseShape;
-import com.mxgraph.shape.mxHexagonShape;
-import com.mxgraph.shape.mxHtmlTextShape;
-import com.mxgraph.shape.mxIShape;
-import com.mxgraph.shape.mxITextShape;
-import com.mxgraph.shape.mxImageShape;
-import com.mxgraph.shape.mxLabelShape;
-import com.mxgraph.shape.mxLineShape;
-import com.mxgraph.shape.mxRectangleShape;
-import com.mxgraph.shape.mxRhombusShape;
-import com.mxgraph.shape.mxStencilRegistry;
-import com.mxgraph.shape.mxSwimlaneShape;
-import com.mxgraph.shape.mxTriangleShape;
+import com.mxgraph.crayonscript.shapes.*;
+import com.mxgraph.shape.*;
 import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An implementation of a canvas that uses Graphics2D for painting.
@@ -91,25 +60,103 @@ public class mxGraphics2DCanvas extends mxBasicCanvas
 	 */
 	static
 	{
-		putShape(mxConstants.SHAPE_ACTOR, new mxActorShape());
-		putShape(mxConstants.SHAPE_ARROW, new mxArrowShape());
-		putShape(mxConstants.SHAPE_CLOUD, new mxCloudShape());
-		putShape(mxConstants.SHAPE_CONNECTOR, new mxConnectorShape());
-		putShape(mxConstants.SHAPE_CYLINDER, new mxCylinderShape());
-		putShape(mxConstants.SHAPE_CURVE, new mxCurveShape());
-		putShape(mxConstants.SHAPE_DOUBLE_RECTANGLE, new mxDoubleRectangleShape());
-		putShape(mxConstants.SHAPE_DOUBLE_ELLIPSE, new mxDoubleEllipseShape());
-		putShape(mxConstants.SHAPE_ELLIPSE, new mxEllipseShape());
-		putShape(mxConstants.SHAPE_HEXAGON, new mxHexagonShape());
-		putShape(mxConstants.SHAPE_IMAGE, new mxImageShape());
-		putShape(mxConstants.SHAPE_LABEL, new mxLabelShape());
-		putShape(mxConstants.SHAPE_LINE, new mxLineShape());
-		putShape(mxConstants.SHAPE_RECTANGLE, new mxRectangleShape());
-		putShape(mxConstants.SHAPE_RHOMBUS, new mxRhombusShape());
-		putShape(mxConstants.SHAPE_SWIMLANE, new mxSwimlaneShape());
-		putShape(mxConstants.SHAPE_TRIANGLE, new mxTriangleShape());
+		String shapeName = mxConstants.CRAYONSCRIPT_SHAPE_PARALLEL_EXTENSION;
+		putShape(shapeName, new CrayonScriptParallelVExtenderShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_SEQUENTIAL_EXTENSION;
+		putShape(shapeName, new CrayonScriptSequentialVExtenderShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_EVENT;
+		putShape(shapeName, new CrayonScriptEventShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_ASSIGN;
+		putShape(shapeName, new CrayonScriptAssignShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_PROPERTY;
+		putShape(shapeName, new CrayonScriptPropertyShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_FUNCTION;
+		putShape(shapeName, new CrayonScriptFunctionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_FOR_EACH_EXPR;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_FOR_IN_RANGE;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_WHILE_BOOLEAN_EXPR;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_EQUALS;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_NOTEQUALS;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_GT;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_GT_OR_EQUALS;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_LT;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_LT_OR_EQUALS;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_AND;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_OR;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_NOT;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_MOD;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_MIN;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_MAX;
+		putShape(shapeName, new CrayonScriptExpressionShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_RUN_PARALLEL;
+		putShape(shapeName, new CrayonScriptParallelShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_RUN_SEQUENTIAL;
+		putShape(shapeName, new CrayonScriptSequentialShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_RUN_SINGLE;
+		putShape(shapeName, new CrayonScriptRunShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_IF;
+		putShape(shapeName, new CrayonScriptIfShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_ELSE_IF;
+		putShape(shapeName, new CrayonScriptElseIfShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_WHILE;
+		putShape(shapeName, new CrayonScriptWhileShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_FOR;
+		putShape(shapeName, new CrayonScriptForShape(shapeName));
+
+		shapeName =mxConstants.CRAYONSCRIPT_SHAPE_MARKER;
+		putShape(shapeName, new CrayonScriptMarkerShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_WAIT_FOR;
+		putShape(mxConstants.CRAYONSCRIPT_SHAPE_WAIT_FOR, new CrayonScriptWaitForShape(shapeName));
+
+		shapeName = mxConstants.CRAYONSCRIPT_SHAPE_TEMPLATE;
+		putShape(shapeName, new CrayonScriptGraphTemplateShape(shapeName));
+
+		shapeName = mxConstants.SHAPE_CONNECTOR;
+		putShape(shapeName, new mxConnectorShape());
+
 		putTextShape(TEXT_SHAPE_DEFAULT, new mxDefaultTextShape());
-		putTextShape(TEXT_SHAPE_HTML, new mxHtmlTextShape());
 	}
 
 	/**
@@ -157,11 +204,10 @@ public class mxGraphics2DCanvas extends mxBasicCanvas
 	}
 
 	/**
-	 * 
+	 *
 	 */
-	public mxIShape getShape(Map<String, Object> style)
+	public static mxIShape getShape(String name)
 	{
-		String name = mxUtils.getString(style, mxConstants.STYLE_SHAPE, null);
 		mxIShape shape = shapes.get(name);
 
 		if (shape == null && name != null)
@@ -170,6 +216,15 @@ public class mxGraphics2DCanvas extends mxBasicCanvas
 		}
 
 		return shape;
+	}
+
+	/**
+	 * 
+	 */
+	public static mxIShape getShape(Map<String, Object> style)
+	{
+		String name = mxUtils.getString(style, mxConstants.STYLE_SHAPE, null);
+		return getShape(name);
 	}
 
 	/**
