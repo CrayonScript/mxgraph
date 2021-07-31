@@ -5,3 +5,4 @@ javascript/examples/**/dist
 .idea/
 *.un~
 *.bat~
+out/production
