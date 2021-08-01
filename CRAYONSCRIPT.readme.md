@@ -1,3 +1,7 @@
+# Graph Editor
+Run GraphEditor main to start the servlet container
+
+
 # install node
 npm install
 npm install -g grunt-cli
