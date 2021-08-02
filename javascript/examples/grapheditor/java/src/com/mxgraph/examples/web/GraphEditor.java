@@ -7,6 +7,11 @@ import org.mortbay.jetty.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.Context;
 import org.mortbay.jetty.servlet.ServletHolder;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * The save servlet is used to echo XML to the client, eg. for SVG export and saving
  * (see Dialogs.js:SaveDialog and ExportDialog). The export servlet is used to
@@ -43,8 +48,9 @@ public class GraphEditor
 		context.addServlet(new ServletHolder(new ExportServlet()), "/export");
 		context.addServlet(new ServletHolder(new OpenServlet()), "/open");
 
-		ResourceHandler fileHandler = new ResourceHandler();
+		StaticFileResourceHandler fileHandler = new StaticFileResourceHandler();
 		fileHandler.setResourceBase(".");
+		fileHandler.setServer(server);
 
 		HandlerList handlers = new HandlerList();
 		handlers.setHandlers(new Handler[] { fileHandler, context });
@@ -54,5 +60,16 @@ public class GraphEditor
 		
 		server.start();
 		server.join();
+	}
+}
+
+class StaticFileResourceHandler extends ResourceHandler
+{
+	@Override
+	public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch) throws IOException, ServletException {
+		super.handle(target, request, response, dispatch);
+
+		// update the headers
+		response.setHeader("Cache-Control", "no-cache");
 	}
 }
