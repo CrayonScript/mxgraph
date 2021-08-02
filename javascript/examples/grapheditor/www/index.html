@@ -78,7 +78,7 @@
 						var editor = this.editor;
 
 						var doc = mxUtils.parseXml(xml);
-						editor.graph.setSelectionCells(editor.graph.importGraphModel(doc.documentElement));
+						editor.graph.importGraphModel(doc.documentElement);
 
 						var enabled = req.getStatus() != 404;
 						this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
