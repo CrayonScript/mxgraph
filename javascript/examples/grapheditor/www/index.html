@@ -72,6 +72,14 @@
 				{
 					mxUtils.post(OPEN_URL, '', mxUtils.bind(this, function(req)
 					{
+						var encodedText = req.getText();
+						var xml = decodeURIComponent(encodedText);
+
+						var editor = this.editor;
+
+						var doc = mxUtils.parseXml(xml);
+						editor.graph.setSelectionCells(editor.graph.importGraphModel(doc.documentElement));
+
 						var enabled = req.getStatus() != 404;
 						this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
 						this.actions.get('import').setEnabled(enabled || Graph.fileSupport);

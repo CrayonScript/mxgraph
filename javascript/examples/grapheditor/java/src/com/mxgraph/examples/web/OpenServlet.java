@@ -66,24 +66,14 @@ public class OpenServlet extends HttpServlet
 		}
 
 		PrintWriter writer = new PrintWriter(out);
-		writer.println("<html>");
-		writer.println("<head>");
-		writer.println("</head>");
-		writer.println("<body>");
-		writer.println("<script type=\"text/javascript\">");
 
 		try
 		{
 			if (request.getContentLength() < Constants.MAX_REQUEST_SIZE)
 			{
-				Map<String, String> post = parseMultipartRequest(request);
-				String xml = new String(post.get("upfile").getBytes(ENCODING),
-						"UTF-8");
-				String filename = post.get("filename");
-
-				// Uses JavaScript to load the XML on the client-side
-				writer.println("window.parent.openFile.setData(decodeURIComponent('"
-						+ encodeURIComponent(xml) + "'), '" + filename + "');");
+				String xml = DataStoreHandler.INSTANCE.getData("Drawing1");
+				String encodedXML = encodeURIComponent(xml);
+				writer.println(encodedXML);
 			}
 			else
 			{
@@ -94,10 +84,6 @@ public class OpenServlet extends HttpServlet
 		{
 			error(writer, "invalidOrMissingFile");
 		}
-
-		writer.println("</script>");
-		writer.println("</body>");
-		writer.println("</html>");
 
 		writer.flush();
 		writer.close();

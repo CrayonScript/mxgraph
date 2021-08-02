@@ -56,6 +56,8 @@ public class GraphEditor
 		handlers.setHandlers(new Handler[] { fileHandler, context });
 		server.setHandler(handlers);
 
+		DataStoreHandler.INSTANCE.setDataStoreBase("data_store");
+
 		System.out.println("Go to http://localhost:" + PORT + "/javascript/examples/grapheditor/www/index.html");
 		
 		server.start();
@@ -65,6 +67,7 @@ public class GraphEditor
 
 class StaticFileResourceHandler extends ResourceHandler
 {
+
 	@Override
 	public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch) throws IOException, ServletException {
 		super.handle(target, request, response, dispatch);

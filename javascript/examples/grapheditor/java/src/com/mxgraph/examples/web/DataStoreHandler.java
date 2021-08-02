@@ -26,7 +26,7 @@ public class DataStoreHandler
         this.dataStoreBase = value;
     }
 
-    public String readData(String key)
+    public String getData(String key)
     {
         String filePath = getFilePath(key);
         try
@@ -41,7 +41,7 @@ public class DataStoreHandler
         return null;
     }
 
-    public void storeData(String key, String contents)
+    public void setData(String key, String contents)
     {
         String filePath = getFilePath(key);
         try
