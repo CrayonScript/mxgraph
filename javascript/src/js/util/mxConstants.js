@@ -128,16 +128,16 @@
 	/**
 	 * Variable: SHADOW_OFFSET_X
 	 * 
-	 * Specifies the x-offset of the shadow. Default is 2.
+	 * Specifies the x-offset of the shadow. Default is 1.
 	 */
-	SHADOW_OFFSET_X: 2,
+	SHADOW_OFFSET_X: 1,
 
 	/**
 	 * Variable: SHADOW_OFFSET_Y
 	 * 
-	 * Specifies the y-offset of the shadow. Default is 3.
+	 * Specifies the y-offset of the shadow. Default is 1.
 	 */
-	SHADOW_OFFSET_Y: 3,
+	SHADOW_OFFSET_Y: 1,
 	
 	/**
 	 * Variable: SHADOW_OPACITY
