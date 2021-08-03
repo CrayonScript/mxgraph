@@ -125,6 +125,7 @@ mxCellRenderer.registerShape = function(key, shape)
 };
 
 // Adds default shapes into the default shapes array
+mxCellRenderer.registerShape(mxConstants.SHAPE_CRAYONSCRIPT_TEMPLATE, mxCrayonScriptTemplateShape);
 mxCellRenderer.registerShape(mxConstants.SHAPE_RECTANGLE, mxRectangleShape);
 mxCellRenderer.registerShape(mxConstants.SHAPE_ELLIPSE, mxEllipse);
 mxCellRenderer.registerShape(mxConstants.SHAPE_RHOMBUS, mxRhombus);

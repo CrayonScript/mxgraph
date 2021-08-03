@@ -1890,7 +1890,15 @@
 	 * Constant for strikthrough fonts. Default is 8.
 	 */
 	FONT_STRIKETHROUGH: 8,
-	
+
+    /**
+ 	 * Variable: SHAPE_CRAYONSCRIPT_TEMPLATE
+ 	 *
+ 	 * Name under which <mxCrayonScriptTemplateShape> is registered in <mxCellRenderer>.
+ 	 * Default is rectangle.
+ 	 */
+ 	SHAPE_CRAYONSCRIPT_TEMPLATE: 'crayonscript_template',
+
 	/**
 	 * Variable: SHAPE_RECTANGLE
 	 * 

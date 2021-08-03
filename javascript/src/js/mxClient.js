@@ -689,6 +689,7 @@ if (mxForceIncludes || !(typeof module === 'object' && module.exports != null))
 	mxClient.include(mxClient.basePath+'/js/util/mxVmlCanvas2D.js');
 	mxClient.include(mxClient.basePath+'/js/util/mxGuide.js');
 	mxClient.include(mxClient.basePath+'/js/shape/mxShape.js');
+	mxClient.include(mxClient.basePath+'/js/shape/mxCrayonScriptTemplateShape.js');
 	mxClient.include(mxClient.basePath+'/js/shape/mxStencil.js');
 	mxClient.include(mxClient.basePath+'/js/shape/mxStencilRegistry.js');
 	mxClient.include(mxClient.basePath+'/js/shape/mxMarker.js');

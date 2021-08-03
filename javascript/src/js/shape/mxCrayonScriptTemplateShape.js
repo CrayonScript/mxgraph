@@ -1,24 +1,24 @@
 /**
- * Class: mxCrayonScriptShape
+ * Class: mxCrayonScriptTemplateShape
  *
  * Extends <mxShape> to implement a rectangle shape.
  * This shape is registered under <mxConstants.SHAPE_CRAYONSCRIPT>
  * in <mxCellRenderer>.
  * 
- * Constructor: mxCrayonScriptShape
+ * Constructor: mxCrayonScriptTemplateShape
  *
- * Constructs a new crayonscript shape.
+ * Constructs a new crayonscript template shape.
  * 
  * Parameters:
  * 
- * bounds - <mxCrayonScript> that defines the bounds. This is stored in
+ * bounds - <mxCrayonTemplateScript> that defines the bounds. This is stored in
  * <mxShape.bounds>.
  * fill - String that defines the fill color. This is stored in <fill>.
  * stroke - String that defines the stroke color. This is stored in <stroke>.
  * strokewidth - Optional integer that defines the stroke width. Default is
  * 1. This is stored in <strokewidth>.
  */
-function mxCrayonScriptShape(bounds, fill, stroke, strokewidth)
+function mxCrayonScriptTemplateShape(bounds, fill, stroke, strokewidth)
 {
 	mxShape.call(this);
 	this.bounds = bounds;
@@ -30,14 +30,14 @@ function mxCrayonScriptShape(bounds, fill, stroke, strokewidth)
 /**
  * Extends mxShape.
  */
-mxUtils.extend(mxCrayonScriptShape, mxShape);
+mxUtils.extend(mxCrayonScriptTemplateShape, mxShape);
 
 /**
  * Function: isHtmlAllowed
  *
  * Returns true for non-rounded, non-rotated shapes with no glass gradient.
  */
-mxCrayonScriptShape.prototype.isHtmlAllowed = function()
+mxCrayonScriptTemplateShape.prototype.isHtmlAllowed = function()
 {
 	var events = true;
 	
@@ -55,7 +55,7 @@ mxCrayonScriptShape.prototype.isHtmlAllowed = function()
  * 
  * Generic background painting implementation.
  */
-mxCrayonScriptShape.prototype.paintBackground = function(c, x, y, w, h)
+mxCrayonScriptTemplateShape.prototype.paintBackground = function(c, x, y, w, h)
 {
 	var events = true;
 	
@@ -104,7 +104,7 @@ mxCrayonScriptShape.prototype.paintBackground = function(c, x, y, w, h)
  * 
  * Adds roundable support.
  */
-mxCrayonScriptShape.prototype.isRoundable = function(c, x, y, w, h)
+mxCrayonScriptTemplateShape.prototype.isRoundable = function(c, x, y, w, h)
 {
 	return true;
 };
@@ -114,7 +114,7 @@ mxCrayonScriptShape.prototype.isRoundable = function(c, x, y, w, h)
  * 
  * Generic background painting implementation.
  */
-mxCrayonScriptShape.prototype.paintForeground = function(c, x, y, w, h)
+mxCrayonScriptTemplateShape.prototype.paintForeground = function(c, x, y, w, h)
 {
 	if (this.glass && !this.outline && this.fill != null && this.fill != mxConstants.NONE)
 	{
