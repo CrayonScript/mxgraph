@@ -1292,6 +1292,7 @@ mxShape.prototype.resetStyles = function()
 	delete this.isShadow;
 	delete this.isDashed;
 	delete this.isRounded;
+	delete this.isCrayonScriptBlock;
 	delete this.glass;
 };
 
@@ -1315,6 +1316,7 @@ mxShape.prototype.resetStyles = function()
  * - <mxConstants.STYLE_STARTSIZE> => startSize
  * - <mxConstants.STYLE_ENDSIZE> => endSize
  * - <mxConstants.STYLE_ROUNDED> => isRounded
+ * - <mxConstants.STYLE_CRAYONSCRIPT_BLOCK> => isCrayonScriptBlock
  * - <mxConstants.STYLE_STARTARROW> => startArrow
  * - <mxConstants.STYLE_ENDARROW> => endArrow
  * - <mxConstants.STYLE_ROTATION> => rotation
@@ -1372,6 +1374,7 @@ mxShape.prototype.apply = function(state)
 		this.isShadow = mxUtils.getValue(this.style, mxConstants.STYLE_SHADOW, this.isShadow) == 1;
 		this.isDashed = mxUtils.getValue(this.style, mxConstants.STYLE_DASHED, this.isDashed) == 1;
 		this.isRounded = mxUtils.getValue(this.style, mxConstants.STYLE_ROUNDED, this.isRounded) == 1;
+		this.isCrayonScriptBlock = mxUtils.getValue(this.style, mxConstants.STYLE_CRAYONSCRIPT_BLOCK, this.isCrayonScriptBlock) == 1;
 		this.glass = mxUtils.getValue(this.style, mxConstants.STYLE_GLASS, this.glass) == 1;
 		
 		if (this.fill == mxConstants.NONE)

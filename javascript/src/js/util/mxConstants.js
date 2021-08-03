@@ -1470,6 +1470,18 @@
 	 */
 	STYLE_ROUNDED: 'rounded',
 
+    /**
+	 * Variable: STYLE_ROUNDED
+	 *
+	 * Defines the key for the rounded style. The type of this value is
+	 * Boolean. For edges this determines whether or not joins between edges
+	 * segments are smoothed to a rounded finish. For vertices that have the
+	 * rectangle shape, this determines whether or not the rectangle is
+	 * rounded. Use 0 (default) for non-rounded or 1 for rounded. Value is
+	 * "rounded".
+	 */
+	STYLE_CRAYONSCRIPT_BLOCK: 'block',
+
 	/**
 	 * Variable: STYLE_CURVED
 	 * 

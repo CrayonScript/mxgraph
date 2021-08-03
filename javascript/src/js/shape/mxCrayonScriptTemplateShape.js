@@ -71,8 +71,37 @@ mxCrayonScriptTemplateShape.prototype.paintBackground = function(c, x, y, w, h)
 		{
 			c.pointerEvents = false;
 		}
-		
-		if (this.isRounded)
+
+		if (this.isCrayonScriptBlock)
+		{
+		    var r = 0;
+
+            if (mxUtils.getValue(this.style, mxConstants.STYLE_ABSOLUTE_ARCSIZE, 0) == '1')
+            {
+                r = Math.min(w / 2, Math.min(h / 2, mxUtils.getValue(this.style,
+                    mxConstants.STYLE_ARCSIZE, mxConstants.LINE_ARCSIZE) / 2));
+            }
+            else
+            {
+                var f = mxUtils.getValue(this.style, mxConstants.STYLE_ARCSIZE,
+                    mxConstants.RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+                r = Math.min(w * f, h * f);
+            }
+
+            var arc = r;
+
+		    c.begin();
+
+		    c.moveTo(x + arc, y);
+            c.quadTo(x, y, x, y + arc);
+            c.lineTo(x, y + h);
+            c.quadTo(x + w * 0.5, y + h * 0.7, x + w, y + h);
+            c.lineTo(x + w, y + arc);
+            c.quadTo(x + w, y, x + w - arc, y);
+
+		    c.close();
+		}
+		else if (this.isRounded)
 		{
 			var r = 0;
 			
