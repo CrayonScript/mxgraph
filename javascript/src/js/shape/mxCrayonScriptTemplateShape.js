@@ -90,9 +90,11 @@ mxCrayonScriptTemplateShape.prototype.paintBackground = function(c, x, y, w, h)
 
             var arc = r;
 
-		    c.begin();
+            c.begin();
 
-		    c.moveTo(x + arc, y);
+		    c.setLineJoin("bevel");
+
+            c.moveTo(x + arc, y);
             c.quadTo(x, y, x, y + arc);
             c.lineTo(x, y + h - arc);
             c.quadTo(x, y + h, x + arc, y + h);
