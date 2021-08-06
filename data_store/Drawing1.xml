@@ -5,42 +5,42 @@
         <mxCell id="2" value=""
                 style="shape=crayonscript_template;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=20;shadow=1;fillColor=#CCE5FF;strokeColor=none;"
                 vertex="1" parent="1">
-            <mxGeometry x="40" y="40" width="320" height="120" as="geometry"/>
+            <mxGeometry x="40" y="40" width="240" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="3" value=""
                 style="shape=crayonscript_template;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=20;shadow=1;fillColor=#CCE5FF;strokeColor=none;"
                 vertex="1" parent="1">
-            <mxGeometry x="40" y="165" width="320" height="120" as="geometry"/>
+            <mxGeometry x="40" y="125" width="240" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="4" value=""
                 style="shape=crayonscript_template;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=20;shadow=1;fillColor=#CCE5FF;strokeColor=none;"
                 vertex="1" parent="1">
-            <mxGeometry x="40" y="290" width="320" height="120" as="geometry"/>
+            <mxGeometry x="40" y="210" width="240" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="5" value=""
                 style="shape=crayonscript_template;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=20;shadow=1;fillColor=#CCE5FF;strokeColor=none;"
                 vertex="1" parent="1">
-            <mxGeometry x="40" y="415" width="320" height="120" as="geometry"/>
+            <mxGeometry x="40" y="295" width="240" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="6" value=""
                 style="shape=crayonscript_template;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=20;shadow=1;fillColor=#CCE5FF;strokeColor=none;"
                 vertex="1" parent="1">
-            <mxGeometry x="40" y="540" width="320" height="120" as="geometry"/>
+            <mxGeometry x="40" y="380" width="240" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="7" value=""
                 style="shape=crayonscript_template;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=20;shadow=1;fillColor=#CCE5FF;strokeColor=none;"
                 vertex="1" parent="1">
-            <mxGeometry x="40" y="665" width="320" height="120" as="geometry"/>
+            <mxGeometry x="40" y="465" width="240" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="8" value=""
                 style="shape=crayonscript_template;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=20;shadow=1;fillColor=#CCE5FF;strokeColor=none;"
                 vertex="1" parent="1">
-            <mxGeometry x="40" y="790" width="320" height="120" as="geometry"/>
+            <mxGeometry x="40" y="550" width="240" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="9" value=""
                 style="shape=crayonscript_template;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=20;shadow=1;fillColor=#CCE5FF;strokeColor=none;"
                 vertex="1" parent="1">
-            <mxGeometry x="40" y="915" width="320" height="120" as="geometry"/>
+            <mxGeometry x="40" y="635" width="240" height="80" as="geometry"/>
         </mxCell>
     </root>
 </mxGraphModel>
