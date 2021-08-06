@@ -1538,7 +1538,7 @@ Graph.prototype.edgeMode = false;
 /**
  * Allows all values in fit.
  */
-Graph.prototype.connectionArrowsEnabled = true;
+Graph.prototype.connectionArrowsEnabled = false;
 
 /**
  * Specifies the regular expression for matching placeholders.

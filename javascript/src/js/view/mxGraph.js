@@ -9878,7 +9878,9 @@ mxGraph.prototype.canImportCell = function(cell)
  */
 mxGraph.prototype.isCellSelectable = function(cell)
 {
-	return this.isCellsSelectable();
+    var style = this.getCurrentCellStyle(cell);
+
+    return this.isCellsSelectable() && style[mxConstants.STYLE_DELETABLE] != 0;
 };
 
 /**

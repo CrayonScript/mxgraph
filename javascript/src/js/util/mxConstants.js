@@ -1791,6 +1791,15 @@
 	 */
 	STYLE_DELETABLE: 'deletable',
 
+	 /**
+	  * Variable: STYLE_SELECTABLE
+	  *
+	  * Defines the key for the selectable style. This specifies if a cell can be
+	  * selected. Possible values are 0 or 1. Default is 1. See
+	  * <mxGraph.isCellSelectable>. Value is "selectable".
+	  */
+	 STYLE_SELECTABLE: 'selectable',
+
 	/**
 	 * Variable: STYLE_SHAPE
 	 * 
