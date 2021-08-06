@@ -2,7 +2,7 @@
  * Class: mxCrayonScriptTemplateShape
  *
  * Extends <mxShape> to implement a rectangle shape.
- * This shape is registered under <mxConstants.SHAPE_CRAYONSCRIPT>
+ * This shape is registered under <mxConstants.SHAPE_CRAYONSCRIPT_TEMPLATE>
  * in <mxCellRenderer>.
  * 
  * Constructor: mxCrayonScriptTemplateShape
@@ -11,7 +11,7 @@
  * 
  * Parameters:
  * 
- * bounds - <mxCrayonTemplateScript> that defines the bounds. This is stored in
+ * bounds - <mxRectangle> that defines the bounds. This is stored in
  * <mxShape.bounds>.
  * fill - String that defines the fill color. This is stored in <fill>.
  * stroke - String that defines the stroke color. This is stored in <stroke>.
