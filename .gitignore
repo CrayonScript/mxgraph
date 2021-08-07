@@ -6,3 +6,4 @@ javascript/examples/**/dist
 *.un~
 *.bat~
 out/production
+ace/
