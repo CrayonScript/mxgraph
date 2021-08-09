@@ -80,13 +80,15 @@ EditorUi = function(editor, container, lightbox)
 			this.toolbarContainer.onmousedown = textEditing;
 			this.diagramContainer.onselectstart = textEditing;
 			this.diagramContainer.onmousedown = textEditing;
+			this.blockEditorContainer.onselectstart = textEditing;
+			this.blockEditorContainer.onmousedown = textEditing;
 			this.sidebarContainer.onselectstart = textEditing;
 			this.sidebarContainer.onmousedown = textEditing;
 			this.formatContainer.onselectstart = textEditing;
 			this.formatContainer.onmousedown = textEditing;
 			this.footerContainer.onselectstart = textEditing;
 			this.footerContainer.onmousedown = textEditing;
-			
+
 			if (this.tabContainer != null)
 			{
 				// Mouse down is needed for drag and drop
@@ -1021,6 +1023,12 @@ EditorUi.prototype.sidebarFooterHeight = 34;
 EditorUi.prototype.hsplitPosition = (screen.width <= 640) ? 118 : ((urlParams['sidebar-entries'] != 'large') ? 212 : 240);
 
 /**
+ * Specifies the position of the horizontal split bar. Default is 240 or 118 for
+ * screen widths <= 640px.
+ */
+EditorUi.prototype.hsplit2Position = (screen.width <= 640) ? 318 : ((urlParams['sidebar-entries'] != 'large') ? 882 : 540);
+
+/**
  * Specifies if animations are allowed in <executeLayout>. Default is true.
  */
 EditorUi.prototype.allowAnimation = true;
@@ -1039,6 +1047,11 @@ EditorUi.prototype.lightboxVerticalDivider = 4;
  * Specifies if single click on horizontal split should collapse sidebar. Default is false.
  */
 EditorUi.prototype.hsplitClickEnabled = false;
+
+/**
+ * Specifies if single click on horizontal split should collapse diagram container. Default is false.
+ */
+EditorUi.prototype.hsplit2ClickEnabled = false;
 
 /**
  * Installs the listeners to update the action states.
@@ -1744,8 +1757,10 @@ EditorUi.prototype.initCanvas = function()
 	 */
 	graph.getPagePadding = function()
 	{
-		return new mxPoint(Math.max(0, Math.round((graph.container.offsetWidth - 34) / graph.view.scale)),
-				Math.max(0, Math.round((graph.container.offsetHeight - 34) / graph.view.scale)));
+		// rvergis 08/07/21 - remove page padding
+		// return new mxPoint(Math.max(0, Math.round((graph.container.offsetWidth - 34) / graph.view.scale)),
+		// 		Math.max(0, Math.round((graph.container.offsetHeight - 34) / graph.view.scale)));
+		return new mxPoint(0, 0);
 	};
 
 	// Fits the number of background pages to the graph
@@ -3610,6 +3625,7 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 	}
 	
 	var effHsplitPosition = Math.max(0, Math.min(this.hsplitPosition, w - this.splitSize - 20));
+	var effHsplit2Position = Math.max(0, Math.min(this.hsplit2Position, w - this.splitSize - 20));
 	var tmp = 0;
 	
 	if (this.menubar != null)
@@ -3647,22 +3663,29 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 	this.formatContainer.style.top = tmp + 'px';
 	this.formatContainer.style.width = fw + 'px';
 	this.formatContainer.style.display = (this.format != null) ? '' : 'none';
-	
+
 	var diagContOffset = this.getDiagramContainerOffset();
 	var contLeft = (this.hsplit.parentNode != null) ? (effHsplitPosition + this.splitSize) : 0;
 	this.diagramContainer.style.left =  (contLeft + diagContOffset.x) + 'px';
 	this.diagramContainer.style.top = (tmp + diagContOffset.y) + 'px';
+	this.diagramContainer.style.right = ((this.hsplit2.parentNode != null) ? (w - effHsplit2Position - this.splitSize) : 0) + 'px';
+	this.blockEditorContainer.style.top = (tmp + diagContOffset.y) + 'px';
+	this.blockEditorContainer.style.left = ((this.hsplit2.parentNode != null) ? (effHsplit2Position + this.splitSize) : 0) + 'px';
+	this.blockEditorContainer.style.right = ((this.format != null) ? this.formatWidth : 0) + 'px';
 	this.footerContainer.style.height = this.footerHeight + 'px';
 	this.hsplit.style.top = this.sidebarContainer.style.top;
 	this.hsplit.style.bottom = (this.footerHeight + off) + 'px';
 	this.hsplit.style.left = effHsplitPosition + 'px';
+	this.hsplit2.style.top = this.sidebarContainer.style.top;
+	this.hsplit2.style.bottom = (this.footerHeight + off) + 'px';
+	this.hsplit2.style.left = effHsplit2Position + 'px';
 	this.footerContainer.style.display = (this.footerHeight == 0) ? 'none' : '';
 	
 	if (this.tabContainer != null)
 	{
 		this.tabContainer.style.left = contLeft + 'px';
 	}
-	
+
 	if (quirks)
 	{
 		this.menubarContainer.style.width = w + 'px';
@@ -3670,10 +3693,9 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 		var sidebarHeight = Math.max(0, h - this.footerHeight - this.menubarHeight - this.toolbarHeight);
 		this.sidebarContainer.style.height = (sidebarHeight - sidebarFooterHeight) + 'px';
 		this.formatContainer.style.height = sidebarHeight + 'px';
-		this.diagramContainer.style.width = (this.hsplit.parentNode != null) ? Math.max(0, w - effHsplitPosition - this.splitSize - fw) + 'px' : w + 'px';
 		this.footerContainer.style.width = this.menubarContainer.style.width;
 		var diagramHeight = Math.max(0, h - this.footerHeight - this.menubarHeight - this.toolbarHeight);
-		
+
 		if (this.tabContainer != null)
 		{
 			this.tabContainer.style.width = this.diagramContainer.style.width;
@@ -3683,25 +3705,27 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 		
 		this.diagramContainer.style.height = diagramHeight + 'px';
 		this.hsplit.style.height = diagramHeight + 'px';
+		this.hsplit2.style.height = diagramHeight + 'px';
 	}
 	else
 	{
-		if (this.footerHeight > 0)
-		{
-			this.footerContainer.style.bottom = off + 'px';
-		}
-		
-		this.diagramContainer.style.right = fw + 'px';
+		//this.diagramContainer.style.right = fw + 'px';
 		var th = 0;
-		
+
 		if (this.tabContainer != null)
 		{
 			this.tabContainer.style.bottom = (this.footerHeight + off) + 'px';
 			this.tabContainer.style.right = this.diagramContainer.style.right;
 			th = this.tabContainer.clientHeight;
 		}
+
+		if (this.footerHeight > 0)
+		{
+			this.footerContainer.style.bottom = off + 'px';
+		}
 		
 		this.sidebarContainer.style.bottom = (this.footerHeight + sidebarFooterHeight + off) + 'px';
+		this.blockEditorContainer.style.bottom = (this.footerHeight + sidebarFooterHeight + off) + 'px';
 		this.formatContainer.style.bottom = (this.footerHeight + off) + 'px';
 		this.diagramContainer.style.bottom = (this.footerHeight + off + th) + 'px';
 	}
@@ -3731,8 +3755,11 @@ EditorUi.prototype.createDivs = function()
 	this.formatContainer = this.createDiv('geSidebarContainer geFormatContainer');
 	this.diagramContainer = this.createDiv('geDiagramContainer');
 	this.footerContainer = this.createDiv('geFooterContainer');
+	this.blockEditorContainer = this.createDiv('geBlockEditorContainer');
 	this.hsplit = this.createDiv('geHsplit');
 	this.hsplit.setAttribute('title', mxResources.get('collapseExpand'));
+	this.hsplit2 = this.createDiv('geHsplit');
+	this.hsplit2.setAttribute('title', mxResources.get('collapseExpand'));
 
 	// Sets static style for containers
 	this.menubarContainer.style.top = '0px';
@@ -3743,12 +3770,13 @@ EditorUi.prototype.createDivs = function()
 	this.sidebarContainer.style.left = '0px';
 	this.formatContainer.style.right = '0px';
 	this.formatContainer.style.zIndex = '1';
-	this.diagramContainer.style.right = ((this.format != null) ? this.formatWidth : 0) + 'px';
+	this.blockEditorContainer.style.left = '0x';
 	this.footerContainer.style.left = '0px';
 	this.footerContainer.style.right = '0px';
 	this.footerContainer.style.bottom = '0px';
 	this.footerContainer.style.zIndex = mxPopupMenu.prototype.zIndex - 2;
 	this.hsplit.style.width = this.splitSize + 'px';
+	this.hsplit2.style.width = this.splitSize + 'px';
 	this.sidebarFooterContainer = this.createSidebarFooterContainer();
 	
 	if (this.sidebarFooterContainer)
@@ -3856,12 +3884,28 @@ EditorUi.prototype.createUi = function()
 	{
 		this.container.appendChild(this.hsplit);
 		
-		this.addSplitHandler(this.hsplit, true, 0, mxUtils.bind(this, function(value)
+		this.addSplitHandler(this.hsplit, true, 0, this.hsplitClickEnabled, mxUtils.bind(this, function(value)
 		{
 			this.hsplitPosition = value;
 			this.refresh();
 		}));
 	}
+
+	// HSplit2
+	if (this.diagramContainer != null)
+	{
+		this.container.appendChild(this.hsplit2);
+
+		this.addSplitHandler(this.hsplit2, true, 0, this.hsplit2ClickEnabled, mxUtils.bind(this, function(value)
+		{
+			this.hsplit2Position = value;
+			this.refresh();
+		}));
+	}
+
+	// Code Editor
+	this.container.appendChild(this.blockEditorContainer);
+	this.blockEditor = this.createBlockEditor(this.blockEditorContainer);
 };
 
 /**
@@ -3889,6 +3933,15 @@ EditorUi.prototype.setStatusText = function(value)
 EditorUi.prototype.createToolbar = function(container)
 {
 	return new Toolbar(this, container);
+};
+
+/**
+ * Creates a new block editor for the given container.
+ * Block editor is composed of a Source Code Editor and a Sheets Editor (similar to google sheets)
+ */
+EditorUi.prototype.createBlockEditor = function(container)
+{
+	return new BlockEditor(this, container);
 };
 
 /**
@@ -3929,7 +3982,7 @@ EditorUi.prototype.createDiv = function(classname)
 /**
  * Updates the states of the given undo/redo items.
  */
-EditorUi.prototype.addSplitHandler = function(elt, horizontal, dx, onChange)
+EditorUi.prototype.addSplitHandler = function(elt, horizontal, dx, clickFlagEnabled, onChange)
 {
 	var start = null;
 	var initial = null;
@@ -3988,7 +4041,7 @@ EditorUi.prototype.addSplitHandler = function(elt, horizontal, dx, onChange)
 	
 	mxEvent.addListener(elt, 'click', mxUtils.bind(this, function(evt)
 	{
-		if (!ignoreClick && this.hsplitClickEnabled)
+		if (!ignoreClick && clickFlagEnabled)
 		{
 			var next = (last != null) ? last - dx : 0;
 			last = getValue();
@@ -5010,6 +5063,12 @@ EditorUi.prototype.destroy = function()
 		this.toolbar.destroy();
 		this.toolbar = null;
 	}
+
+	if (this.blockEditor != null)
+	{
+		this.blockEditor.destroy();
+		this.codeEditor = null;
+	}
 	
 	if (this.sidebar != null)
 	{
@@ -5071,8 +5130,8 @@ EditorUi.prototype.destroy = function()
 	
 	var c = [this.menubarContainer, this.toolbarContainer, this.sidebarContainer,
 	         this.formatContainer, this.diagramContainer, this.footerContainer,
-	         this.chromelessToolbar, this.hsplit, this.sidebarFooterContainer,
-	         this.layersDialog];
+	         this.chromelessToolbar, this.hsplit, this.hsplit2, this.sidebarFooterContainer,
+	         this.layersDialog, this.blockEditorContainer];
 	
 	for (var i = 0; i < c.length; i++)
 	{
