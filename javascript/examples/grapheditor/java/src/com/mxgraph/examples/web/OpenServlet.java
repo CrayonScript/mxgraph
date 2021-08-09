@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class OpenServlet.
- * 
+ *
  * open.html implements the user interface. This file is displayed within an
  * IFRAME in order to better handle the response. The form is then processed
  * either locally if the browser implements the HTML5 FileReader API or via the
@@ -41,7 +41,7 @@ public class OpenServlet extends HttpServlet
 {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -4442397463551836919L;
 
@@ -71,7 +71,7 @@ public class OpenServlet extends HttpServlet
 		{
 			if (request.getContentLength() < Constants.MAX_REQUEST_SIZE)
 			{
-				String xml = DataStoreHandler.INSTANCE.getData("Drawing1");
+				String xml = DataStoreHandler.INSTANCE.getData("Drawing1.graph");
 				String encodedXML = encodeURIComponent(xml);
 				writer.println(encodedXML);
 			}
@@ -99,7 +99,7 @@ public class OpenServlet extends HttpServlet
 	   * Encodes the passed String as UTF-8 using an algorithm that's compatible
 	   * with JavaScript's <code>encodeURIComponent</code> function. Returns
 	   * <code>null</code> if the String is <code>null</code>.
-	   * 
+	   *
 	   * @param s The String to be encoded
 	   * @return the encoded String
 	   */
