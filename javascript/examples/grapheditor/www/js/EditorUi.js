@@ -1026,7 +1026,7 @@ EditorUi.prototype.hsplitPosition = (screen.width <= 640) ? 118 : ((urlParams['s
  * Specifies the position of the horizontal split bar. Default is 240 or 118 for
  * screen widths <= 640px.
  */
-EditorUi.prototype.hsplit2Position = (screen.width <= 640) ? 318 : ((urlParams['sidebar-entries'] != 'large') ? 882 : 540);
+EditorUi.prototype.hsplit2Position = (screen.width <= 640) ? 318 : ((urlParams['sidebar-entries'] != 'large') ? 702 : 540);
 
 /**
  * Specifies if animations are allowed in <executeLayout>. Default is true.
