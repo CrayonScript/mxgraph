@@ -11,6 +11,27 @@ function BlockEditor(editorUi, container)
     this.init();
 };
 
+BlockEditor.prototype.init = function()
+{
+    this.createCodeEditor();
+    this.createDataEditor();
+}
+
+BlockEditor.prototype.destroy = function()
+{
+
+}
+
+BlockEditor.prototype.showDataView = function()
+{
+
+}
+
+BlockEditor.prototype.showCodeView = function()
+{
+
+}
+
 /**
  * Creates a new code editor.
  */
@@ -57,17 +78,6 @@ BlockEditor.prototype.createDataEditor = function()
     elt.appendChild(editor);
 
     this.dataEditor = editor;
-}
-
-BlockEditor.prototype.init = function()
-{
-    this.createCodeEditor();
-    this.createDataEditor();
-}
-
-BlockEditor.prototype.destroy = function()
-{
-
 }
 
 

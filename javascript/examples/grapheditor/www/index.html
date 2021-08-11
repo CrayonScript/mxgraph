@@ -58,6 +58,7 @@
 	<script type="text/javascript" src="js/Toolbar.js"></script>
 	<script type="text/javascript" src="js/Dialogs.js"></script>
 	<script type="text/javascript" src="js/BlockEditor.js"></script>
+	<script type="text/javascript" src="js/CrayonScript.js"></script>
 </head>
 <body class="geEditor">
 	<script type="text/javascript">
@@ -121,12 +122,8 @@
 			{
 				editorUiOpen.apply(this, arguments);
 
-				this.editor.graph.addListener(mxEvent.CLICK, mxUtils.bind(this, function (sender, evt) {
-					if (evt != null)
-					{
-
-					}
-				}));
+				var crayonScript = new CrayonScript(this);
+				crayonScript.init();
 			}
 
 			// Adds required resources (disables loading of fallback properties, this can only
