@@ -23,10 +23,12 @@ CrayonScript.prototype.init = function() {
             var cell = evt.properties.cell;
             if (this.isDataCell(cell))
             {
+                blockEditor.hideCodeView();
                 blockEditor.showDataView();
             }
             else if (this.isCodeCell(cell))
             {
+                blockEditor.hideDataView();
                 blockEditor.showCodeView();
             }
         }

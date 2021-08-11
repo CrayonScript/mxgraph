@@ -24,12 +24,22 @@ BlockEditor.prototype.destroy = function()
 
 BlockEditor.prototype.showDataView = function()
 {
+    this.dataEditorContainer.style.visibility = 'visible';
+}
 
+BlockEditor.prototype.hideDataView = function()
+{
+    this.dataEditorContainer.style.visibility = 'hidden';
 }
 
 BlockEditor.prototype.showCodeView = function()
 {
+    this.codeEditorContainer.style.visibility = 'visible';
+}
 
+BlockEditor.prototype.hideCodeView = function()
+{
+    this.codeEditorContainer.style.visibility = 'hidden';
 }
 
 /**
