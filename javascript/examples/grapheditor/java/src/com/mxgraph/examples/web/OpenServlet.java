@@ -71,7 +71,8 @@ public class OpenServlet extends HttpServlet
 		{
 			if (request.getContentLength() < Constants.MAX_REQUEST_SIZE)
 			{
-				String xml = DataStoreHandler.INSTANCE.getData("Drawing1.graph");
+				String name = request.getParameter("name");
+				String xml = DataStoreHandler.INSTANCE.getData(name);
 				String encodedXML = encodeURIComponent(xml);
 				writer.println(encodedXML);
 			}

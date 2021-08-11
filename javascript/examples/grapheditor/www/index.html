@@ -74,7 +74,9 @@
 				// Updates action states which require a backend
 				if (!Editor.useLocalStorage)
 				{
-					mxUtils.post(OPEN_URL, '', mxUtils.bind(this, function(req)
+					var graphModel = new mxGraphModel();
+
+					mxUtils.post(OPEN_URL, 'name=Template1.graph', mxUtils.bind(this, function(req)
 					{
 						var encodedText = req.getText();
 						var xml = decodeURIComponent(encodedText);
@@ -82,7 +84,25 @@
 						var editor = this.editor;
 
 						var doc = mxUtils.parseXml(xml);
-						editor.graph.importGraphModel(doc.documentElement);
+						editor.graph.importGraphModel(doc.documentElement, null, null, false, graphModel);
+
+						var enabled = req.getStatus() != 404;
+						this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
+						this.actions.get('import').setEnabled(enabled || Graph.fileSupport);
+						this.actions.get('save').setEnabled(enabled);
+						this.actions.get('saveAs').setEnabled(enabled);
+						this.actions.get('export').setEnabled(enabled);
+					}));
+
+					mxUtils.post(OPEN_URL, 'name=Drawing1.graph', mxUtils.bind(this, function(req)
+					{
+						var encodedText = req.getText();
+						var xml = decodeURIComponent(encodedText);
+
+						var editor = this.editor;
+
+						var doc = mxUtils.parseXml(xml);
+						editor.graph.importGraphModel(doc.documentElement, null, null, false, graphModel);
 
 						var enabled = req.getStatus() != 404;
 						this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
