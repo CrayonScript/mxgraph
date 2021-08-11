@@ -3977,7 +3977,7 @@ EditorUi.prototype.createDiv = function(classname)
 /**
  * Updates the states of the given undo/redo items.
  */
-EditorUi.prototype.addSplitHandler = function(elt, horizontal, collapseRight, dx, onChange)
+EditorUi.prototype.addSplitHandler = function(elt, horizontal, collapsesRight, dx, onChange)
 {
 	var start = null;
 	var initial = null;
@@ -4039,7 +4039,7 @@ EditorUi.prototype.addSplitHandler = function(elt, horizontal, collapseRight, dx
 		if (!ignoreClick && this.hsplitClickEnabled)
 		{
 			var next;
-			if (collapseRight)
+			if (collapsesRight)
 			{
 				// TODO: FIME: fix assumption that this is the 2nd split handler
 				const pos = this.container.clientWidth - this.formatContainer.clientWidth - this.splitSize;
