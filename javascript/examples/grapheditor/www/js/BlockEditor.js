@@ -40,7 +40,21 @@ BlockEditor.prototype.createCodeEditor = function()
  */
 BlockEditor.prototype.createDataEditor = function()
 {
+    //
+    // canvas-datagrid
+    //
 
+    var editorId = 'geDataEditorContainer';
+    var elt = document.createElement('div');
+    elt.className = 'geDataEditorContainer';
+    elt.id = editorId;
+    this.dataEditorContainer = elt;
+    this.container.appendChild(this.dataEditorContainer);
+
+    const editor = canvasDatagrid();
+    elt.appendChild(editor);
+
+    this.dataEditor = editor;
 }
 
 BlockEditor.prototype.init = function()
