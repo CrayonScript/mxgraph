@@ -51,7 +51,9 @@ BlockEditor.prototype.createDataEditor = function()
     this.dataEditorContainer = elt;
     this.container.appendChild(this.dataEditorContainer);
 
-    const editor = canvasDatagrid();
+    const editor = canvasDatagrid({
+        showNewRow : true
+    });
     elt.appendChild(editor);
 
     this.dataEditor = editor;
