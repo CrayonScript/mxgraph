@@ -1,14 +1,9 @@
 <crayonscript>
     <data>
         <root>
-            <codeCell cellId="10">
+            <codeCell cellId="c0">
                 <![CDATA[
                     print("Hello World")
-                ]]>
-            </codeCell>
-            <codeCell cellId="11">
-                <![CDATA[
-
                 ]]>
             </codeCell>
         </root>
