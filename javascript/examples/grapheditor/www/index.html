@@ -72,6 +72,8 @@
 				editorUiInit.apply(this, arguments);
 				this.actions.get('export').setEnabled(false);
 
+				this.hsplitClickEnabled = true;
+
 				// Updates action states which require a backend
 				if (!Editor.useLocalStorage)
 				{
@@ -103,13 +105,6 @@
 
 							var doc = mxUtils.parseXml(xml);
 							editor.graph.importGraphModel(doc.documentElement, null, null, false, graphModel);
-
-							var enabled = req.getStatus() != 404;
-							this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
-							this.actions.get('import').setEnabled(enabled || Graph.fileSupport);
-							this.actions.get('save').setEnabled(enabled);
-							this.actions.get('saveAs').setEnabled(enabled);
-							this.actions.get('export').setEnabled(enabled);
 						}));
 
 					}));

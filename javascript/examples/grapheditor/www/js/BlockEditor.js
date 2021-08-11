@@ -15,6 +15,8 @@ BlockEditor.prototype.init = function()
 {
     this.createCodeEditor();
     this.createDataEditor();
+    this.hideCodeView();
+    this.hideDataView();
 }
 
 BlockEditor.prototype.destroy = function()

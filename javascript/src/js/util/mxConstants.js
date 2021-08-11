@@ -672,9 +672,9 @@
 	* Variable: PAGE_FORMAT_CRAYONSCRIPT_PORTRAIT
 	*
 	* Defines the rectangle for the CRAYONSCRIPT portrait page format. The dimensions
-	* of this page format are 500x1169 pixels.
+	* of this page format are 2000x1169 pixels.
 	*/
-	PAGE_FORMAT_CRAYONSCRIPT_PORTRAIT: new mxRectangle(0, 0, 640, 1169),
+	PAGE_FORMAT_CRAYONSCRIPT_PORTRAIT: new mxRectangle(0, 0, 2000, 1169),
 
 	/**
 	 * Variable: PAGE_FORMAT_A4_PORTRAIT
