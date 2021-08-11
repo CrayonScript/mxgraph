@@ -1,4 +1,16 @@
 <mxGraphModel dx="853" dy="529" grid="1" gridSize="10" guides="1" tooltips="0" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100">
     <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="d0" value=""
+                style="shape=crayonscript_code;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=100;shadow=1;fillColor=#66FF66;strokeColor=none;"
+                vertex="1" parent="1">
+            <mxGeometry x="40" y="40" width="240" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="d1" value=""
+                style="shape=crayonscript_data;editable=0;movable=0;resizable=0;rotatable=0;deletable=0;selectable=0;cloneable=0;block=1;whiteSpace=wrap;html=1;glass=0;fillOpacity=100;shadow=1;fillColor=#EA6B66;strokeColor=none;"
+                vertex="1" parent="1">
+            <mxGeometry x="40" y="125" width="240" height="80" as="geometry"/>
+        </mxCell>
     </root>
 </mxGraphModel>
