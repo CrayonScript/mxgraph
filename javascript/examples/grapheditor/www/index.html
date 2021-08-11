@@ -115,6 +115,20 @@
 				}
 			};
 
+			var editorUiOpen = EditorUi.prototype.open;
+
+			EditorUi.prototype.open = function()
+			{
+				editorUiOpen.apply(this, arguments);
+
+				this.editor.graph.addListener(mxEvent.CLICK, mxUtils.bind(this, function (sender, evt) {
+					if (evt != null)
+					{
+
+					}
+				}));
+			}
+
 			// Adds required resources (disables loading of fallback properties, this can only
 			// be used if we know that all keys are defined in the language specific file)
 			mxResources.loadDefaultBundle = false;
