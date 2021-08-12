@@ -37,17 +37,49 @@ CrayonScript.prototype.init = function() {
 
 CrayonScript.prototype.importCode = function(node)
 {
-
+    this.codeObjects = this.readCellContents(node, "codeCell")
 }
 
 CrayonScript.prototype.importData = function(node)
 {
+    this.dataObjects = this.readCellContents(node, "dataCell");
+}
 
+CrayonScript.prototype.readCellContents = function(node, contentTag)
+{
+    const cellContents = [];
+    const codeStack = [];
+    codeStack.push(node);
+    while (codeStack.length > 0) {
+        let nodeToProcess = codeStack.pop();
+        if (nodeToProcess.tagName == contentTag) {
+            let cellId = nodeToProcess.attributes["cellId"].value;
+            let cellContent = this.readCDATA(nodeToProcess);
+            cellContents.push({ cellId: cellId, cellContent: cellContent });
+        }
+        for (let i = 0; i < nodeToProcess.childElementCount; i++) {
+            codeStack.unshift(nodeToProcess.children[i]);
+        }
+    }
+    return cellContents;
 }
 
 //
 // Utility functions
 //
+
+CrayonScript.prototype.readCDATA = function(node)
+{
+    let count = node.childNodes.length;
+    for (let i = 0; i < count; i++) {
+        if (node.childNodes[i].nodeType == 4) { // CDATA-SECTION = 4
+            let text = node.childNodes[i].wholeText;
+            return text;
+        }
+    }
+    return null;
+}
+
 CrayonScript.prototype.isTemplateCell = function(cell)
 {
     return this.getShapeName(cell) == mxConstants.SHAPE_CRAYONSCRIPT_TEMPLATE;
