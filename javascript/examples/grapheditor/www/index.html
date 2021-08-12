@@ -79,15 +79,37 @@
 				{
 					var graphModel = new mxGraphModel();
 
-					mxUtils.post(OPEN_URL, 'name=Template1.graph', mxUtils.bind(this, function(req)
+					mxUtils.post(OPEN_URL, 'name=Drawing1.graph', mxUtils.bind(this, function(req)
 					{
 						var encodedText = req.getText();
 						var xml = decodeURIComponent(encodedText);
-
 						const editor = this.editor;
-
+						const crayonScript = this.crayonScript;
 						const doc = mxUtils.parseXml(xml);
+
 						editor.graph.importGraphModel(doc.documentElement, null, null, false, graphModel);
+
+						mxUtils.post(OPEN_URL, 'name=Drawing1.data', mxUtils.bind(this, function(req)
+						{
+							var encodedText = req.getText();
+							var xml = decodeURIComponent(encodedText);
+
+							// parse all the data
+							var doc = mxUtils.parseXml(xml);
+							crayonScript.importData(doc.documentElement);
+
+						}));
+
+						mxUtils.post(OPEN_URL, 'name=Drawing1.code', mxUtils.bind(this, function(req)
+						{
+							var encodedText = req.getText();
+							var xml = decodeURIComponent(encodedText);
+
+							// parse all the code
+							var doc = mxUtils.parseXml(xml);
+							crayonScript.importCode(doc.documentElement);
+
+						}));
 
 						var enabled = req.getStatus() != 404;
 						this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
@@ -96,39 +118,7 @@
 						this.actions.get('saveAs').setEnabled(enabled);
 						this.actions.get('export').setEnabled(enabled);
 
-						mxUtils.post(OPEN_URL, 'name=Drawing1.graph', mxUtils.bind(this, function(req)
-						{
-							var encodedText = req.getText();
-							var xml = decodeURIComponent(encodedText);
 
-							const crayonScript = this.crayonScript;
-
-							const doc = mxUtils.parseXml(xml);
-							editor.graph.importGraphModel(doc.documentElement, null, null, false, graphModel);
-
-							mxUtils.post(OPEN_URL, 'name=Drawing1.data', mxUtils.bind(this, function(req)
-							{
-								var encodedText = req.getText();
-								var xml = decodeURIComponent(encodedText);
-
-								// parse all the data
-								var doc = mxUtils.parseXml(xml);
-								crayonScript.importData(doc.documentElement);
-
-							}));
-
-							mxUtils.post(OPEN_URL, 'name=Drawing1.code', mxUtils.bind(this, function(req)
-							{
-								var encodedText = req.getText();
-								var xml = decodeURIComponent(encodedText);
-
-								// parse all the code
-								var doc = mxUtils.parseXml(xml);
-								crayonScript.importCode(doc.documentElement);
-
-							}));
-
-						}));
 
 					}));
 				}

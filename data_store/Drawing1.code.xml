@@ -1,7 +1,7 @@
 <crayonscript>
     <data>
         <root>
-            <codeCell cellId="c1">
+            <codeCell cellId="c0">
                 <![CDATA[
                     print("Hello World")
                 ]]>
