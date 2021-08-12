@@ -84,9 +84,9 @@
 						var encodedText = req.getText();
 						var xml = decodeURIComponent(encodedText);
 
-						var editor = this.editor;
+						const editor = this.editor;
 
-						var doc = mxUtils.parseXml(xml);
+						const doc = mxUtils.parseXml(xml);
 						editor.graph.importGraphModel(doc.documentElement, null, null, false, graphModel);
 
 						var enabled = req.getStatus() != 404;
@@ -101,10 +101,33 @@
 							var encodedText = req.getText();
 							var xml = decodeURIComponent(encodedText);
 
-							var editor = this.editor;
+							const crayonScript = this.crayonScript;
 
-							var doc = mxUtils.parseXml(xml);
+							const doc = mxUtils.parseXml(xml);
 							editor.graph.importGraphModel(doc.documentElement, null, null, false, graphModel);
+
+							mxUtils.post(OPEN_URL, 'name=Drawing1.data', mxUtils.bind(this, function(req)
+							{
+								var encodedText = req.getText();
+								var xml = decodeURIComponent(encodedText);
+
+								// parse all the data
+								var doc = mxUtils.parseXml(xml);
+								crayonScript.importData(doc.documentElement);
+
+							}));
+
+							mxUtils.post(OPEN_URL, 'name=Drawing1.code', mxUtils.bind(this, function(req)
+							{
+								var encodedText = req.getText();
+								var xml = decodeURIComponent(encodedText);
+
+								// parse all the code
+								var doc = mxUtils.parseXml(xml);
+								crayonScript.importCode(doc.documentElement);
+
+							}));
+
 						}));
 
 					}));
@@ -119,6 +142,7 @@
 
 				var crayonScript = new CrayonScript(this);
 				crayonScript.init();
+				this.crayonScript = crayonScript;
 			}
 
 			// Adds required resources (disables loading of fallback properties, this can only

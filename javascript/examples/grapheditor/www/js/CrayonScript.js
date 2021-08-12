@@ -6,8 +6,8 @@
 
 CrayonScript = function(editorUi)
 {
-    this.editorUi = editorUi;
-    this.editor = this.editorUi.editor;
+    this.editor = editorUi.editor;
+    this.blockEditor = editorUi.blockEditor;
     this.graph = this.editor.graph;
     this.graphView = this.graph.view;
 }
@@ -18,7 +18,7 @@ CrayonScript.prototype.init = function() {
         if (evt != null)
         {
             // get the block editor
-            var blockEditor = this.editorUi.blockEditor;
+            var blockEditor = this.blockEditor;
             // get the cell
             var cell = evt.properties.cell;
             if (this.isDataCell(cell))
@@ -33,6 +33,16 @@ CrayonScript.prototype.init = function() {
             }
         }
     }));
+}
+
+CrayonScript.prototype.importCode = function(node)
+{
+
+}
+
+CrayonScript.prototype.importData = function(node)
+{
+
 }
 
 //
