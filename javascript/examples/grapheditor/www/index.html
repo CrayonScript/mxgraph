@@ -77,8 +77,6 @@
 				// Updates action states which require a backend
 				if (!Editor.useLocalStorage)
 				{
-					var graphModel = new mxGraphModel();
-
 					mxUtils.post(OPEN_URL, 'name=Drawing1.graph', mxUtils.bind(this, function(req)
 					{
 						var encodedText = req.getText();
@@ -87,7 +85,7 @@
 						const crayonScript = this.crayonScript;
 						const doc = mxUtils.parseXml(xml);
 
-						editor.graph.importGraphModel(doc.documentElement, null, null, false, graphModel);
+						editor.graph.importGraphModel(doc.documentElement);
 
 						mxUtils.post(OPEN_URL, 'name=Drawing1.data', mxUtils.bind(this, function(req)
 						{
@@ -118,7 +116,7 @@
 						this.actions.get('saveAs').setEnabled(enabled);
 						this.actions.get('export').setEnabled(enabled);
 
-
+						
 
 					}));
 				}

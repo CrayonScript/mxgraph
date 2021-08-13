@@ -6425,13 +6425,13 @@ if (typeof mxVertexHandler != 'undefined')
 		/**
 		 *
 		 */
-		Graph.prototype.importGraphModel = function(node, dx, dy, crop, graphModel)
+		Graph.prototype.importGraphModel = function(node, dx, dy, crop)
 		{
 			dx = (dx != null) ? dx : 0;
 			dy = (dy != null) ? dy : 0;
 
 			var codec = new mxCodec(node.ownerDocument);
-			var tempModel = graphModel || new mxGraphModel();
+			var tempModel = new mxGraphModel();
 			codec.decode(node, tempModel);
 			var cells = []
 
