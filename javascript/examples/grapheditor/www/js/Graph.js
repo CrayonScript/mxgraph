@@ -6425,7 +6425,7 @@ if (typeof mxVertexHandler != 'undefined')
 		/**
 		 *
 		 */
-		Graph.prototype.importGraphModel = function(node, dx, dy, crop)
+		Graph.prototype.importGraphModel = function(node, dx, dy, crop, clean)
 		{
 			dx = (dx != null) ? dx : 0;
 			dy = (dy != null) ? dy : 0;
@@ -6438,8 +6438,9 @@ if (typeof mxVertexHandler != 'undefined')
 			// Clones cells to remove invalid edges
 			var cloneMap = new Object();
 			var cellMapping = new Object();
-			var layers = tempModel.getChildren(this.cloneCell(tempModel.root,
-				this.isCloneInvalidEdges(), cloneMap));
+			var layers = tempModel.getChildren(
+				clean ? tempModel.root :
+					this.cloneCell(tempModel.root, this.isCloneInvalidEdges(), cloneMap));
 
 			if (layers != null)
 			{

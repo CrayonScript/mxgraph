@@ -85,7 +85,7 @@
 						const crayonScript = this.crayonScript;
 						const doc = mxUtils.parseXml(xml);
 
-						editor.graph.importGraphModel(doc.documentElement);
+						editor.graph.importGraphModel(doc.documentElement, null, null, false, true);
 
 						mxUtils.post(OPEN_URL, 'name=Drawing1.data', mxUtils.bind(this, function(req)
 						{
@@ -116,7 +116,7 @@
 						this.actions.get('saveAs').setEnabled(enabled);
 						this.actions.get('export').setEnabled(enabled);
 
-						
+						crayonScript.selectCell("c0");
 
 					}));
 				}

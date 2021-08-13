@@ -35,6 +35,20 @@ CrayonScript.prototype.init = function() {
     }));
 }
 
+CrayonScript.prototype.selectCell = function(cellId)
+{
+    const graphModel = this.graph.model;
+    // these are template cells
+    for (let key in graphModel.cells) {
+        let cell = graphModel.cells[key];
+        if (cell.getId() == cellId) {
+            // click this cell
+            this.clickCell(cell);
+            break;
+        }
+    }
+}
+
 CrayonScript.prototype.importCode = function(node)
 {
     this.codeObjects = this.readCellContents(node, "codeCell")
@@ -62,6 +76,14 @@ CrayonScript.prototype.readCellContents = function(node, contentTag)
         }
     }
     return cellContents;
+}
+
+CrayonScript.prototype.clickCell = function(cell)
+{
+    const cellState = this.graphView.getState(cell);
+    if (cellState != null) {
+        this.graph.click(new mxMouseEvent(new PointerEvent("mouse"), cellState));
+    }
 }
 
 //
