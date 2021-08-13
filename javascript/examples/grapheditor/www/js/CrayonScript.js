@@ -29,7 +29,7 @@ CrayonScript.prototype.init = function() {
             else if (this.isCodeCell(cell))
             {
                 blockEditor.hideDataView();
-                blockEditor.showCodeView();
+                blockEditor.showCodeView(this.getCode(cell));
             }
         }
     }));
@@ -86,6 +86,24 @@ CrayonScript.prototype.clickCell = function(cell)
     }
 }
 
+CrayonScript.prototype.getData = function(cell)
+{
+    const data = this.dataObjects[cell.getId()];
+    return data;
+}
+
+CrayonScript.prototype.getCode = function(cell)
+{
+    for (const codeKey in this.codeObjects) {
+        let codeObject = this.codeObjects[codeKey];
+        if (codeObject.cellId == cell.getId()) {
+            let code = codeObject.cellContent;
+            return code;
+        }
+    }
+    return "";
+}
+
 //
 // Utility functions
 //
@@ -95,7 +113,7 @@ CrayonScript.prototype.readCDATA = function(node)
     let count = node.childNodes.length;
     for (let i = 0; i < count; i++) {
         if (node.childNodes[i].nodeType == 4) { // CDATA-SECTION = 4
-            let text = node.childNodes[i].wholeText;
+            let text = node.childNodes[i].nodeValue;
             return text;
         }
     }

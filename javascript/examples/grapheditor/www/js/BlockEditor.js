@@ -34,9 +34,10 @@ BlockEditor.prototype.hideDataView = function()
     this.dataEditorContainer.style.visibility = 'hidden';
 }
 
-BlockEditor.prototype.showCodeView = function()
+BlockEditor.prototype.showCodeView = function(contents)
 {
     this.codeEditorContainer.style.visibility = 'visible';
+    this.codeEditor.setValue(contents, 1);
 }
 
 BlockEditor.prototype.hideCodeView = function()

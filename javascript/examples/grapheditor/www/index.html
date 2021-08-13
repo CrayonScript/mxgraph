@@ -96,27 +96,27 @@
 							var doc = mxUtils.parseXml(xml);
 							crayonScript.importData(doc.documentElement);
 
+							mxUtils.post(OPEN_URL, 'name=Drawing1.code', mxUtils.bind(this, function(req)
+							{
+								var encodedText = req.getText();
+								var xml = decodeURIComponent(encodedText);
+
+								// parse all the code
+								var doc = mxUtils.parseXml(xml);
+								crayonScript.importCode(doc.documentElement);
+
+								var enabled = req.getStatus() != 404;
+								this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
+								this.actions.get('import').setEnabled(enabled || Graph.fileSupport);
+								this.actions.get('save').setEnabled(enabled);
+								this.actions.get('saveAs').setEnabled(enabled);
+								this.actions.get('export').setEnabled(enabled);
+
+								crayonScript.selectCell("c0");
+
+							}));
+
 						}));
-
-						mxUtils.post(OPEN_URL, 'name=Drawing1.code', mxUtils.bind(this, function(req)
-						{
-							var encodedText = req.getText();
-							var xml = decodeURIComponent(encodedText);
-
-							// parse all the code
-							var doc = mxUtils.parseXml(xml);
-							crayonScript.importCode(doc.documentElement);
-
-						}));
-
-						var enabled = req.getStatus() != 404;
-						this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
-						this.actions.get('import').setEnabled(enabled || Graph.fileSupport);
-						this.actions.get('save').setEnabled(enabled);
-						this.actions.get('saveAs').setEnabled(enabled);
-						this.actions.get('export').setEnabled(enabled);
-
-						crayonScript.selectCell("c0");
 
 					}));
 				}
