@@ -295,6 +295,13 @@
       };
     }
 
+    , parallelStatement: function(body) {
+      return {
+        type: 'ParallelStatement'
+        , body: body
+      };
+    }
+
     , repeatStatement: function(condition, body) {
       return {
           type: 'RepeatStatement'
@@ -1426,9 +1433,9 @@
       case 5:
         return 'break' === id || 'local' === id || 'until' === id || 'while' === id;
       case 6:
-        return 'elseif' === id || 'repeat' === id || 'return' === id;
+        return 'elseif' === id || 'repeat' === id || 'return' === id || 'series' === id;
       case 8:
-        return 'function' === id;
+        return 'function' === id || 'parallel' === id;
     }
     return false;
   }
@@ -1818,6 +1825,8 @@
             raise(token, errors.noLoopToBreak, token.value);
           return parseBreakStatement();
         case 'do':       next(); return parseDoStatement(flowContext);
+        case 'parallel': next(); return parseParallelStatement(flowContext);
+        case 'series': next(); return parseSeriesStatement(flowContext);
         case 'goto':     next(); return parseGotoStatement(flowContext);
       }
     }
@@ -1881,6 +1890,32 @@
     if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.doStatement(body));
+  }
+
+  //     series ::= 'series do' block 'end'
+
+  function parseSeriesStatement(flowContext) {
+    expect('do');
+    if (options.scope) createScope();
+    flowContext.pushScope();
+    var body = parseBlock(flowContext);
+    flowContext.popScope();
+    if (options.scope) destroyScope();
+    expect('end');
+    return finishNode(ast.doStatement(body));
+  }
+
+  //     parallel ::= 'parallel do' block 'end'
+
+  function parseParallelStatement(flowContext) {
+    expect('do');
+    if (options.scope) createScope();
+    flowContext.pushScope();
+    var body = parseBlock(flowContext);
+    flowContext.popScope();
+    if (options.scope) destroyScope();
+    expect('end');
+    return finishNode(ast.parallelStatement(body));
   }
 
   //     while ::= 'while' exp 'do' block 'end'

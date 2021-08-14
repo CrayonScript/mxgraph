@@ -5,6 +5,10 @@
             	<![CDATA[
 do
 	print("Hello World")
+	parallel do
+	    print("Parallel 1")
+	    print("Parallel 2")
+	end
 end
             	]]>
             </codeCell>

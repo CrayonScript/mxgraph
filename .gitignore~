@@ -1,0 +1,8 @@
+node_modules
+javascript/dist
+.jshintrc
+javascript/examples/**/dist
+*.un~
+*.bat~
+out/production
+ace/
