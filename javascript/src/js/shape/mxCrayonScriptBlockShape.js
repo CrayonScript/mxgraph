@@ -102,14 +102,14 @@ mxCrayonScriptBlockShape.prototype.paintBackground = function(c, x, y, w, h)
             c.quadTo(x, y, x, y + arc);
             c.lineTo(x, y + h - arc);
             c.quadTo(x, y + h, x + arc, y + h);
-            c.lineTo(x + w * 0.4, y + h);
-            c.quadTo(x + w * 0.5, y + h * 0.8, x + w * 0.6, y + h);
+			c.lineTo(x + arc * 1.5, y + h);
+            c.quadTo(x + arc * 2.5, y + h - arc, x + arc * 3.5, y + h)
             c.lineTo(x + w - arc, y + h);
             c.quadTo(x + w, y + h, x + w, y + h - arc);
             c.lineTo(x + w, y + arc);
             c.quadTo(x + w, y, x + w - arc, y);
-            c.lineTo(x + w * 0.6, y);
-            c.quadTo(x + w * 0.5, y - h * 0.2, x + w * 0.4, y);
+            c.lineTo(x + arc * 3.5, y);
+            c.quadTo(x + arc * 2.5, y - arc, x + arc * 1.5, y);
 
 
 		    c.close();
