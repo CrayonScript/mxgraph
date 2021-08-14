@@ -2,7 +2,11 @@
     <data>
         <root>
             <codeCell cellId="c0">
-            	<![CDATA[print("Hello World")]]>
+            	<![CDATA[
+do
+	print("Hello World")
+end
+            	]]>
             </codeCell>
         </root>
     </data>

@@ -66,9 +66,6 @@
 		// Extends EditorUi to update I/O action states based on availability of backend
 		(function()
 		{
-			var ast = luaparse.parse('i = 0');
-			console.log(JSON.stringify(ast));
-
 			var editorUiInit = EditorUi.prototype.init;
 
 			EditorUi.prototype.init = function()
@@ -116,6 +113,7 @@
 								this.actions.get('saveAs').setEnabled(enabled);
 								this.actions.get('export').setEnabled(enabled);
 
+								crayonScript.buildCell("c0");
 								crayonScript.selectCell("c0");
 
 							}));

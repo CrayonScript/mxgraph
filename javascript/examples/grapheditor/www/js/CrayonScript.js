@@ -29,24 +29,45 @@ CrayonScript.prototype.init = function() {
             else if (this.isCodeCell(cell))
             {
                 blockEditor.hideDataView();
-                blockEditor.showCodeView(this.getCode(cell));
+                let code = this.getCode(cell);
+                code = code.trim();
+                blockEditor.showCodeView(code);
             }
         }
     }));
 }
 
+CrayonScript.prototype.buildCells = function()
+{
+
+}
+
+CrayonScript.prototype.buildCell = function(cellId)
+{
+    const cell = this.findCell(cellId);
+    let code = this.getCode(cell);
+    var ast = luaparse.parse(code);
+    console.log(JSON.stringify(ast));
+}
+
 CrayonScript.prototype.selectCell = function(cellId)
+{
+    const graphModel = this.graph.model;
+    const cell = this.findCell(cellId);
+    this.clickCell(cell);
+}
+
+CrayonScript.prototype.findCell = function(cellId)
 {
     const graphModel = this.graph.model;
     // these are template cells
     for (let key in graphModel.cells) {
         let cell = graphModel.cells[key];
         if (cell.getId() == cellId) {
-            // click this cell
-            this.clickCell(cell);
-            break;
+            return cell;
         }
     }
+    return null;
 }
 
 CrayonScript.prototype.importCode = function(node)
