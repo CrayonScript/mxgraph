@@ -52,7 +52,6 @@ CrayonScript.prototype.buildCell = function(cellId)
 
 CrayonScript.prototype.selectCell = function(cellId)
 {
-    const graphModel = this.graph.model;
     const cell = this.findCell(cellId);
     this.clickCell(cell);
 }
