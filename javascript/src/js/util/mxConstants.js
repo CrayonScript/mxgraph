@@ -1923,7 +1923,7 @@
     /**
  	 * Variable: SHAPE_CRAYONSCRIPT_TEMPLATE
  	 *
- 	 * Name under which <mxCrayonScriptTemplateShape> is registered in <mxCellRenderer>.
+ 	 * Name under which <mxCrayonScriptBlockShape> is registered in <mxCellRenderer>.
  	 * Default is rectangle.
  	 */
  	SHAPE_CRAYONSCRIPT_TEMPLATE: 'crayonscript_template',

@@ -125,9 +125,9 @@ mxCellRenderer.registerShape = function(key, shape)
 };
 
 // Adds default shapes into the default shapes array
-mxCellRenderer.registerShape(mxConstants.SHAPE_CRAYONSCRIPT_TEMPLATE, mxCrayonScriptTemplateShape);
-mxCellRenderer.registerShape(mxConstants.SHAPE_CRAYONSCRIPT_CODE, mxCrayonScriptCodeShape);
-mxCellRenderer.registerShape(mxConstants.SHAPE_CRAYONSCRIPT_DATA, mxCrayonScriptDataShape);
+mxCellRenderer.registerShape(mxConstants.SHAPE_CRAYONSCRIPT_TEMPLATE, mxCrayonScriptBlockShape);
+mxCellRenderer.registerShape(mxConstants.SHAPE_CRAYONSCRIPT_CODE, mxCrayonScriptBlockShape);
+mxCellRenderer.registerShape(mxConstants.SHAPE_CRAYONSCRIPT_DATA, mxCrayonScriptBlockShape);
 mxCellRenderer.registerShape(mxConstants.SHAPE_RECTANGLE, mxRectangleShape);
 mxCellRenderer.registerShape(mxConstants.SHAPE_ELLIPSE, mxEllipse);
 mxCellRenderer.registerShape(mxConstants.SHAPE_RHOMBUS, mxRhombus);
