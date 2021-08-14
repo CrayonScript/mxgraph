@@ -18,3 +18,7 @@ http-server
 # modifying js files
 grunt --gruntfile etc\build\Gruntfile.js --base .
 # reload the page
+
+
+# luaparse.js
+use the luaparse.js from the ace editor
