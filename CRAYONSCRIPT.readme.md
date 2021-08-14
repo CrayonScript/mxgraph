@@ -22,7 +22,6 @@ reload the page
 
 
 # luaparse.js
-The luaparse.js is copied from the ace editor library  
+The luaparse.js is built independent of the ace editor library  
 The lib path is $ACE_HOME/lib/ace/mode/lua/luaparse.js  
-This is required so that the editor and CrayonScript share the same parser  
 Any update to the ace library would require a corresponding luaparse.js update  
