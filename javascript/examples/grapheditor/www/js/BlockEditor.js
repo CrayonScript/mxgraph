@@ -64,7 +64,11 @@ BlockEditor.prototype.createCodeEditor = function()
     const editor = ace.edit(editorId);
     editor.setTheme("ace/theme/vibrant_ink");
     editor.session.setMode("ace/mode/lua");
-    editor.setShowPrintMargin(false);
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        showPrintMargin: false
+    });
 
     this.codeEditor = editor;
 };
