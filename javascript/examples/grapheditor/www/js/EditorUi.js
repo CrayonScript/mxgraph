@@ -4390,7 +4390,7 @@ EditorUi.prototype.save = function(name)
 				if (xml.length < MAX_REQUEST_SIZE)
 				{
 					new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
-						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');
+						'&xml=' + encodeURIComponent(xml)).send(document);
 				}
 				else
 				{
@@ -4408,6 +4408,41 @@ EditorUi.prototype.save = function(name)
 		catch (e)
 		{
 			this.editor.setStatus(mxUtils.htmlEntities(mxResources.get('errorSavingFile')));
+		}
+	}
+};
+
+/**
+ * Adds the label menu items to the given menu and parent.
+ */
+EditorUi.prototype.publishFile = function()
+{
+	this.publish(this.editor.getOrCreateFilename());
+};
+
+/**
+ * Publishes the current graph under the given filename
+ */
+EditorUi.prototype.publish = function(name)
+{
+	if (name != null)
+	{
+		if (this.editor.graph.isEditing())
+		{
+			this.editor.graph.stopEditing();
+		}
+
+		try
+		{
+			new mxXmlRequest(PUBLISH_URL, 'filename=').send();
+
+			this.editor.setModified(false);
+			this.editor.setFilename(name);
+			this.updateDocumentTitle();
+		}
+		catch (e)
+		{
+			this.editor.setStatus(mxUtils.htmlEntities(mxResources.get('errorPublishingFile')));
 		}
 	}
 };
