@@ -44,6 +44,11 @@ public class DataStoreHandler
         return null;
     }
 
+    public void setEditorData(String key, String contents)
+    {
+        setData(key, "editor", contents);
+    }
+
     public void setData(String key, String location, String contents)
     {
         String filePath = getFilePath(key, location);
