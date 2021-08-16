@@ -44,7 +44,8 @@ public class GraphEditor
 
 		// Servlets
 		Context context = new Context(server, "/");
-		context.addServlet(new ServletHolder(new EchoServlet()), "/save");
+		context.addServlet(new ServletHolder(new SaveServlet()), "/save");
+		context.addServlet(new ServletHolder(new PublishServlet()), "/publish");
 		context.addServlet(new ServletHolder(new ExportServlet()), "/export");
 		context.addServlet(new ServletHolder(new OpenServlet()), "/open");
 
@@ -59,7 +60,7 @@ public class GraphEditor
 		DataStoreHandler.INSTANCE.setDataStoreBase("data_store");
 
 		System.out.println("Go to http://localhost:" + PORT + "/javascript/examples/grapheditor/www/index.html");
-		
+
 		server.start();
 		server.join();
 	}
