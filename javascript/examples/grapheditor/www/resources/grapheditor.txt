@@ -240,6 +240,7 @@ position=Position
 posterPrint=Poster Print
 preview=Preview
 print=Print
+publish=Publish
 radialTree=Radial Tree
 redo=Redo
 removeFormat=Clear Formatting
