@@ -1262,13 +1262,6 @@ ExportDialog.saveLocalFile = function(editorUi, data, filename, format)
 };
 
 /**
- * Constructs a new publish dialog.
- */
-var PublishDialog = function(editorUi)
-{
-};
-
-/**
  * Constructs a new metadata dialog.
  */
 var EditDataDialog = function(ui, cell)
