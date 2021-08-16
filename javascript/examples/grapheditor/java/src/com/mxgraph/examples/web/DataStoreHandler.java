@@ -1,7 +1,6 @@
 package com.mxgraph.examples.web;
 
 import com.mxgraph.util.mxUtils;
-import org.mortbay.jetty.handler.ResourceHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +17,6 @@ public class DataStoreHandler
 
     private DataStoreHandler()
     {
-
     }
 
     public void setDataStoreBase(String value)
@@ -26,9 +24,14 @@ public class DataStoreHandler
         this.dataStoreBase = value;
     }
 
-    public String getData(String key)
+    public String getEditorData(String key)
     {
-        String filePath = getFilePath(key);
+        return getData(key, "editor");
+    }
+
+    public String getData(String key, String location)
+    {
+        String filePath = getFilePath(key, location);
         try
         {
             String fileContents = mxUtils.readFile(filePath);
@@ -41,9 +44,9 @@ public class DataStoreHandler
         return null;
     }
 
-    public void setData(String key, String contents)
+    public void setData(String key, String location, String contents)
     {
-        String filePath = getFilePath(key);
+        String filePath = getFilePath(key, location);
         try
         {
             mxUtils.writeFile(contents, filePath);
@@ -54,9 +57,9 @@ public class DataStoreHandler
         }
     }
 
-    protected String getFilePath(String key)
+    protected String getFilePath(String key, String location)
     {
-        String filePath = String.format("%s%s%s.xml", this.dataStoreBase, File.separator, key);
+        String filePath = String.format("%s%s%s%s%s.xml", this.dataStoreBase, File.separator, location, File.separator, key);
         return filePath;
     }
 }

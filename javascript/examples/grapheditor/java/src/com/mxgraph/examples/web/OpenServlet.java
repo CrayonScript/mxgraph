@@ -72,7 +72,7 @@ public class OpenServlet extends HttpServlet
 			if (request.getContentLength() < Constants.MAX_REQUEST_SIZE)
 			{
 				String name = request.getParameter("name");
-				String xml = DataStoreHandler.INSTANCE.getData(name);
+				String xml = DataStoreHandler.INSTANCE.getEditorData(name);
 				String encodedXML = encodeURIComponent(xml);
 				writer.println(encodedXML);
 			}
