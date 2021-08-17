@@ -114,7 +114,7 @@ CrayonScript.prototype.getData = function(cell)
 
 CrayonScript.prototype.getCode = function(cell)
 {
-    for (const codeKey in this.codeObjects) {
+    for (let codeKey in this.codeObjects) {
         let codeObject = this.codeObjects[codeKey];
         if (codeObject.cellId == cell.getId()) {
             let code = codeObject.cellContent;
@@ -126,7 +126,69 @@ CrayonScript.prototype.getCode = function(cell)
 
 CrayonScript.prototype.save = function(filename)
 {
+    this.saveCode(filename)
+    this.saveData(filename)
+}
 
+CrayonScript.prototype.saveCode = function(filename)
+{
+    // remove the .graph substring from the filename
+    filename = filename.substr(0, filename.length - ".graph".length);
+    filename = filename + ".code";
+    const codeDocument = mxUtils.createXmlDocument();
+    const crayonScriptNode = codeDocument.createElement("crayonscript");
+    const dataNode = codeDocument.createElement("data");
+    const rootNode = codeDocument.createElement("root");
+    codeDocument.appendChild(crayonScriptNode);
+    crayonScriptNode.appendChild(dataNode);
+    dataNode.appendChild(rootNode);
+    for (let codeKey in this.codeObjects)
+    {
+        const codeObject = this.codeObjects[codeKey];
+        const code = codeObject.cellContent;
+        const codeCellNode = codeDocument.createElement("codeCell");
+        codeCellNode.setAttribute("cellId", codeObject.getId());
+        const cDataSection = codeDocument.createCDATASection(code);
+        codeCellNode.appendChild(cDataSection);
+        rootNode.appendChild(codeCellNode);
+    }
+    var codeXml = mxUtils.getXml(codeDocument, '\n');
+    if (codeXml.length < MAX_REQUEST_SIZE)
+    {
+        new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(filename) +
+            '&codeXml=' + encodeURIComponent(codeXml)).send();
+    }
+
+}
+
+CrayonScript.prototype.saveData = function(filename)
+{
+    // remove the .graph substring from the filename
+    filename = filename.substr(0, filename.length - ".graph".length);
+    filename = filename + ".data";
+    const dataDocument = mxUtils.createXmlDocument();
+    const crayonScriptNode = dataDocument.createElement("crayonscript");
+    const dataNode = dataDocument.createElement("data");
+    const rootNode = dataDocument.createElement("root");
+    dataDocument.appendChild(crayonScriptNode);
+    crayonScriptNode.appendChild(dataNode);
+    dataNode.appendChild(rootNode);
+    for (let dataKey in this.dataObjects)
+    {
+        const dataObject = this.dataObjects[dataKey];
+        const code = dataObject.cellContent;
+        const codeCellNode = dataDocument.createElement("dataCell");
+        codeCellNode.setAttribute("cellId", dataObject.getId());
+        const cDataSection = dataDocument.createCDATASection(code);
+        codeCellNode.appendChild(cDataSection);
+        rootNode.appendChild(codeCellNode);
+    }
+    var xml = mxUtils.getXml(dataDocument, '\n');
+    if (xml.length < MAX_REQUEST_SIZE)
+    {
+        new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(filename) +
+            '&xml=' + encodeURIComponent(xml)).send();
+    }
 }
 
 //

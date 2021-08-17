@@ -4393,7 +4393,7 @@ EditorUi.prototype.save = function(name)
 				if (xml.length < MAX_REQUEST_SIZE)
 				{
 					new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
-						'&xml=' + encodeURIComponent(xml)).send(document);
+						'&xml=' + encodeURIComponent(xml)).send();
 				}
 				else
 				{
