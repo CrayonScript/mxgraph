@@ -4335,13 +4335,16 @@ EditorUi.prototype.saveFile = function(forceDialog)
 {
 	if (!forceDialog && this.editor.filename != null)
 	{
-		this.save(this.editor.getOrCreateFilename());
+		var name = this.editor.getOrCreateFilename();
+		this.save(name);
+		this.crayonScript.save(name);
 	}
 	else
 	{
 		var dlg = new FilenameDialog(this, this.editor.getOrCreateFilename(), mxResources.get('save'), mxUtils.bind(this, function(name)
 		{
 			this.save(name);
+			this.crayonScript.save(name);
 		}), null, mxUtils.bind(this, function(name)
 		{
 			if (name != null && name.length > 0)

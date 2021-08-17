@@ -124,6 +124,11 @@ CrayonScript.prototype.getCode = function(cell)
     return "";
 }
 
+CrayonScript.prototype.save = function(filename)
+{
+
+}
+
 //
 // Utility functions
 //

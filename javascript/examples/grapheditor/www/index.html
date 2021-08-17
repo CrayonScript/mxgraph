@@ -84,6 +84,7 @@
 						var encodedText = req.getText();
 						var xml = decodeURIComponent(encodedText);
 						const editor = this.editor;
+						editor.setFilename('Drawing1.graph');
 						const crayonScript = this.crayonScript;
 						const doc = mxUtils.parseXml(xml);
 
