@@ -4437,7 +4437,7 @@ EditorUi.prototype.publish = function(name)
 
 		try
 		{
-			new mxXmlRequest(PUBLISH_URL, 'filename=').send();
+			new mxXmlRequest(PUBLISH_URL, 'filename='+name).send();
 
 			this.editor.setModified(false);
 			this.editor.setFilename(name);

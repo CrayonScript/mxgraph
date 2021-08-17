@@ -1,6 +1,7 @@
 package com.mxgraph.examples.web;
 
 import com.mxgraph.util.mxUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,26 @@ public class DataStoreHandler
     public void setDataStoreBase(String value)
     {
         this.dataStoreBase = value;
+    }
+
+    public void publish(String baseKey) throws IOException {
+        // move the files from the editor to the published directory
+        String[] suffixes = new String[] {
+                ".graph", ".data", ".code"
+        };
+        File dstDir = new File(getDirectory("published"));
+        for (String suffix: suffixes) {
+            String key = baseKey + suffix;
+            try
+            {
+                File srcFile = new File(getFilePath(key, "editor"));
+                FileUtils.copyFileToDirectory(srcFile, dstDir, true);
+            }
+            catch(IOException e)
+            {
+                throw new IOException(key, e);
+            }
+        }
     }
 
     public String getEditorData(String key)
@@ -65,6 +86,12 @@ public class DataStoreHandler
     protected String getFilePath(String key, String location)
     {
         String filePath = String.format("%s%s%s%s%s.xml", this.dataStoreBase, File.separator, location, File.separator, key);
+        return filePath;
+    }
+
+    protected String getDirectory(String location)
+    {
+        String filePath = String.format("%s%s%s", this.dataStoreBase, File.separator, location);
         return filePath;
     }
 }

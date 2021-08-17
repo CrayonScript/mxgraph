@@ -1,0 +1,20 @@
+<crayonscript>
+    <data>
+        <root>
+        	<codeCell cellId="c0">
+            	<![CDATA[
+do
+	waitFor("main")
+end
+            	]]>
+            </codeCell>
+            <codeCell cellId="c1">
+            	<![CDATA[
+do
+	print("Hello World")
+end
+            	]]>
+            </codeCell>
+        </root>
+    </data>
+</crayonscript>
