@@ -2,6 +2,7 @@ package com.mxgraph.examples.web;
 
 import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
+import org.mortbay.jetty.handler.ContextHandler;
 import org.mortbay.jetty.handler.HandlerList;
 import org.mortbay.jetty.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.Context;
@@ -25,6 +26,8 @@ public class GraphEditor
 {
 
 	public static int PORT = 8080;
+
+	public static String PATH_TO_UNITY_ASSETS = "../../../../../CrayonScriptPluginUnityProject/Assets/";
 
 	/**
 	 * Uncomment this for better font size rendering in px units within labels.
@@ -53,8 +56,14 @@ public class GraphEditor
 		fileHandler.setResourceBase(".");
 		fileHandler.setServer(server);
 
+		ContextHandler unityResourceContextHandler = new ContextHandler("/unity");
+		AssetResourceHandler assetResourceHandler = new AssetResourceHandler();
+		assetResourceHandler.setResourceBase(PATH_TO_UNITY_ASSETS);
+		assetResourceHandler.setServer(server);
+		unityResourceContextHandler.setHandler(assetResourceHandler);
+
 		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { fileHandler, context });
+		handlers.setHandlers(new Handler[] { fileHandler, context, unityResourceContextHandler });
 		server.setHandler(handlers);
 
 		DataStoreHandler.INSTANCE.setDataStoreBase("data_store");
@@ -69,6 +78,17 @@ public class GraphEditor
 class StaticFileResourceHandler extends ResourceHandler
 {
 
+	@Override
+	public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch) throws IOException, ServletException {
+		super.handle(target, request, response, dispatch);
+
+		// update the headers
+		response.setHeader("Cache-Control", "no-cache");
+	}
+}
+
+class AssetResourceHandler extends ResourceHandler
+{
 	@Override
 	public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch) throws IOException, ServletException {
 		super.handle(target, request, response, dispatch);

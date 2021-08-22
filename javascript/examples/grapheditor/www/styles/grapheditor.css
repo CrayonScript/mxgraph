@@ -36,7 +36,7 @@
 	color:#000000;
 	text-decoration:none;
 }
-.geMenubarContainer, .geToolbarContainer, .geSidebarContainer, .geFooterContainer, .geHsplit, .geVsplit, .geBlockEditorContainer {
+.geMenubarContainer, .geToolbarContainer, .geSidebarContainer, .geFooterContainer, .geHsplit, .geVsplit, .geBlockEditorContainer, .geWebglContainer {
 	overflow:hidden;
 	position:absolute;
 	cursor:default;
@@ -286,7 +286,7 @@
 .geToolbarContainer {
 	border-bottom:1px solid #dadce0;
 }
-.geSidebarContainer .geToolbarContainer, .geBlockEditorContainer {
+.geSidebarContainer .geToolbarContainer, .geBlockEditorContainer, .geWebglContainer {
 	background:transparent;
 	border-bottom:none;
 }
@@ -341,7 +341,7 @@ div.mxWindow .geButton {
 .geDiagramBackdrop {
 	background-color: #f8f9fa;
 }
-.geSidebarContainer, .geBlockEditorContainer {
+.geSidebarContainer, .geBlockEditorContainer, .geWebglContainer {
 	background:#fbfbfb;
 	overflow:hidden;
 	position:absolute;
@@ -1512,12 +1512,31 @@ html td.mxWindowTitle {
 	overflow-y : hidden;
 }
 
-.geBlockEditorContainer
+.geBlockEditorContainer, .geWebglContainer
 {
 	background: whiteSmoke;
 }
 
 .geCodeEditorContainer
+{
+	position:absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.webgl-content
+{
+	position:absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	-webkit-transform: translate(0%, 0%); transform: translate(0%, 0%);
+}
+
+.geWebglUnityContainer
 {
 	position:absolute;
 	top: 0;
