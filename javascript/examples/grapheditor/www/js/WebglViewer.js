@@ -2,7 +2,7 @@
  * Copyright (c) CrayonScript
  */
 /**
- * Constructs a new code editor for the given editor
+ * Constructs a new webgl viewer for the given editor
  */
 function WebglViewer(editorUi, container)
 {

@@ -1050,8 +1050,7 @@ Sidebar.prototype.addWorkspacePalette = function(expand)
 	const fns = [
 	];
 	const workspaceId = 'workspace';
-	const workspaceEl = this.addPaletteFunctions(workspaceId, mxResources.get(workspaceId), (expand != null) ? expand : true, fns);
-	workspaceEl.id = workspaceId;
+	this.addPaletteFunctions(workspaceId, mxResources.get(workspaceId), (expand != null) ? expand : true, fns);
 }
 
 /**
@@ -4115,14 +4114,13 @@ Sidebar.prototype.createEdgeTemplateFromCells = function(cells, width, height, t
  */
 Sidebar.prototype.addPaletteFunctions = function(id, title, expanded, fns)
 {
-	const el = this.addPalette(id, title, expanded, mxUtils.bind(this, function(content)
+	this.addPalette(id, title, expanded, mxUtils.bind(this, function(content)
 	{
 		for (var i = 0; i < fns.length; i++)
 		{
 			content.appendChild(fns[i](content));
 		}
 	}));
-	return el;
 };
 
 /**
