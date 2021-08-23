@@ -325,3 +325,7 @@ writingDirection=Writing Direction
 zoom=Zoom
 zoomIn=Zoom In
 zoomOut=Zoom Out
+
+# CrayonScript
+workspace=Workspace
+
