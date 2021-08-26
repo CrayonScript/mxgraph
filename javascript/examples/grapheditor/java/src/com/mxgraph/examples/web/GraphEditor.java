@@ -27,8 +27,6 @@ public class GraphEditor
 
 	public static int PORT = 8080;
 
-	public static String PATH_TO_UNITY_ASSETS = "../../../../../CrayonScriptPluginUnityProject/Assets/";
-
 	/**
 	 * Uncomment this for better font size rendering in px units within labels.
 	 */
@@ -51,19 +49,14 @@ public class GraphEditor
 		context.addServlet(new ServletHolder(new PublishServlet()), "/publish");
 		context.addServlet(new ServletHolder(new ExportServlet()), "/export");
 		context.addServlet(new ServletHolder(new OpenServlet()), "/open");
+		context.addServlet(new ServletHolder(new WorkspaceServlet()), "/workspace");
 
 		StaticFileResourceHandler fileHandler = new StaticFileResourceHandler();
 		fileHandler.setResourceBase(".");
 		fileHandler.setServer(server);
 
-		ContextHandler unityResourceContextHandler = new ContextHandler("/unity");
-		AssetResourceHandler assetResourceHandler = new AssetResourceHandler();
-		assetResourceHandler.setResourceBase(PATH_TO_UNITY_ASSETS);
-		assetResourceHandler.setServer(server);
-		unityResourceContextHandler.setHandler(assetResourceHandler);
-
 		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { fileHandler, context, unityResourceContextHandler });
+		handlers.setHandlers(new Handler[] { fileHandler, context });
 		server.setHandler(handlers);
 
 		DataStoreHandler.INSTANCE.setDataStoreBase("data_store");
@@ -87,13 +80,4 @@ class StaticFileResourceHandler extends ResourceHandler
 	}
 }
 
-class AssetResourceHandler extends ResourceHandler
-{
-	@Override
-	public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch) throws IOException, ServletException {
-		super.handle(target, request, response, dispatch);
 
-		// update the headers
-		response.setHeader("Cache-Control", "no-cache");
-	}
-}

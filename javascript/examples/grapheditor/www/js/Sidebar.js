@@ -1047,10 +1047,13 @@ Sidebar.prototype.insertSearchHint = function(div, searchTerm, count, page, resu
 
 Sidebar.prototype.addWorkspacePalette = function(expand)
 {
-	const fns = [
-	];
 	const workspaceId = 'workspace';
-	this.addPaletteFunctions(workspaceId, mxResources.get(workspaceId), (expand != null) ? expand : true, fns);
+	this.workspace = null;
+
+	this.addPalette(workspaceId, mxResources.get(workspaceId), (expand != null) ? expand : true, mxUtils.bind(this, function(content)
+	{
+		this.workspace = new Workspace(this.editorUi, content);
+	}));
 }
 
 /**

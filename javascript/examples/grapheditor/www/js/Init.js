@@ -10,6 +10,7 @@ window.EXPORT_URL = window.EXPORT_URL || '/export';
 window.SAVE_URL = window.SAVE_URL || '/save';
 window.PUBLISH_URL = window.PUBLISH_URL || '/publish';
 window.OPEN_URL = window.OPEN_URL || '/open';
+window.WORKSPACE_URL = window.WORKSPACE_URL || '/workspace';
 window.RESOURCES_PATH = window.RESOURCES_PATH || 'resources';
 window.RESOURCE_BASE = window.RESOURCE_BASE || window.RESOURCES_PATH + '/grapheditor';
 window.STENCIL_PATH = window.STENCIL_PATH || 'stencils';
