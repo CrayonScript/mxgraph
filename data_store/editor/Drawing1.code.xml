@@ -3,8 +3,10 @@
         <root>
         	<codeCell cellId="c0">
             	<![CDATA[
+-- load the level selection scene
 do
-	waitFor("main")
+	WaitFor("PlayButton.Click")
+	LoadScene("LevelSelection")
 end
             	]]>
             </codeCell>
