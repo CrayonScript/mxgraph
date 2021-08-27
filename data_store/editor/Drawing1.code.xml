@@ -5,8 +5,8 @@
             	<![CDATA[
 -- load the level selection scene
 do
-	WaitFor("PlayButton.Click")
-	LoadScene("LevelSelection")
+	WaitFor(Play.Click)
+	LoadScene(Scene.LevelSelection)
 end
             	]]>
             </codeCell>
