@@ -88,18 +88,18 @@
 				// Updates action states which require a backend
 				if (!Editor.useLocalStorage)
 				{
-					mxUtils.post(OPEN_URL, 'name=Drawing1.graph', mxUtils.bind(this, function(req)
+					mxUtils.post(OPEN_URL, 'name=Main.graph', mxUtils.bind(this, function(req)
 					{
 						var encodedText = req.getText();
 						var xml = decodeURIComponent(encodedText);
 						const editor = this.editor;
-						editor.setFilename('Drawing1.graph');
+						editor.setFilename('Main.graph');
 						const crayonScript = this.crayonScript;
 						const doc = mxUtils.parseXml(xml);
 
 						editor.graph.importGraphModel(doc.documentElement, null, null, false, true);
 
-						mxUtils.post(OPEN_URL, 'name=Drawing1.data', mxUtils.bind(this, function(req)
+						mxUtils.post(OPEN_URL, 'name=Main.data', mxUtils.bind(this, function(req)
 						{
 							var encodedText = req.getText();
 							var xml = decodeURIComponent(encodedText);
@@ -108,7 +108,7 @@
 							var doc = mxUtils.parseXml(xml);
 							crayonScript.importData(doc.documentElement);
 
-							mxUtils.post(OPEN_URL, 'name=Drawing1.code', mxUtils.bind(this, function(req)
+							mxUtils.post(OPEN_URL, 'name=Main.code', mxUtils.bind(this, function(req)
 							{
 								var encodedText = req.getText();
 								var xml = decodeURIComponent(encodedText);

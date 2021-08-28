@@ -1,0 +1,31 @@
+<crayonscript>
+    <data>
+        <root>
+        	<codeCell cellId="c0">
+            	<![CDATA[
+-- Main.graph
+-- outer block is the main graph block
+-- each inner block runs async in a coroutine
+do
+    do
+        -- wait for the level selection scene to load
+        WaitFor(Scenes.LevelSelection.Events.Loaded)
+    end
+    do
+        -- load the unity asset async
+        Addressables.LoadAsset("Assets/Demos/Retro/RetroClouds.unity")
+    end
+    do
+        -- enable the button
+        Scenes.LevelSelection.Buttons.RetroClouds.Enable()
+    end
+end
+            	]]>
+            </codeCell>
+            <codeCell cellId="c1">
+            	<![CDATA[
+            	]]>
+            </codeCell>
+        </root>
+    </data>
+</crayonscript>
