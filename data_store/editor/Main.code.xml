@@ -9,7 +9,7 @@
 do
     do
         -- wait for the level selection scene to load
-        WaitFor(Scenes.LevelSelection.Events.Loaded)
+        Events.WaitForEvent(Scenes.LevelSelection.Loaded)
     end
     do
         -- load the unity asset async
