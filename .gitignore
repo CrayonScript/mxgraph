@@ -7,3 +7,4 @@ javascript/examples/**/dist
 out/production
 *.unityweb
 /javascript/examples/grapheditor/www/webgl/
+*.bundle
