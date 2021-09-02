@@ -13,7 +13,7 @@ do
     end
     do
         -- load the unity asset async
-        Addressables.LoadAsset("Assets/Demos/Retro/RetroClouds.unity")
+        Addressables.LoadScene("Assets/Demos/Retro/RetroClouds.unity")
     end
     do
         -- enable the button
