@@ -6,18 +6,38 @@
 -- Main.graph
 -- outer block is the main graph block
 -- each inner block runs async in a coroutine
+-- define all the apis
+GO = { path = 'GO'}
+p = 'GO'
+Metatable = {
+    __index = function(t, k)
+        local p = t['path']
+        p = p .. '.' .. k
+        t['path'] = p
+        return GO
+    end,
+    __newindex = function(t, k, v)
+        local p = t['path']
+        Meta.Apply(p, k, v)
+    end,
+    __call = function(t, val1, val2, val3)
+        local p = t['path']
+        Meta.Call(p, val1)
+    end
+}
+setmetatable(GO, Metatable)
 do
     do
         -- wait for the level selection scene to load
-        Events.WaitForEvent(Scenes.LevelSelection.Loaded)
+        Events.WaitForEvent("Scenes.LevelSelection.Loaded")
     end
     do
         -- load the unity asset async
-        Addressables.LoadScene("Assets/Demos/Retro/RetroClouds.unity")
+        Addressables.LoadScene("Assets/Scenes/LevelSelector.unity")
     end
     do
         -- enable the button
-        Scenes.LevelSelection.Buttons.RetroClouds.Enable()
+        GO.LevelSelection.Buttons.RetroClouds.Enable()
     end
 end
             	]]>
