@@ -29,7 +29,7 @@ setmetatable(GO, Metatable)
 do
     do
         -- wait for the level selection scene to load
-        Events.WaitForEvent("Scenes.LevelSelection.Loaded")
+        Events.WaitForEvent("Scenes.LevelSelector.Loaded")
     end
     do
         -- load the unity asset async
@@ -37,7 +37,7 @@ do
     end
     do
         -- enable the button
-        GO.LevelSelection.Buttons.RetroClouds.Enable()
+        GO.LevelSelector.Buttons.RetroClouds.Enable()
     end
 end
             	]]>
