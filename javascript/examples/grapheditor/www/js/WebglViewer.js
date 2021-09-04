@@ -47,7 +47,7 @@ WebglViewer.prototype.createViewer = function()
     this.webglViewer.className = 'geWebglUnityContainer';
     this.webglViewerContainer.appendChild(this.webglViewer);
 
-    this.webglInstance = UnityLoader.instantiate(this.webglViewer, "webgl/Build/webgl.json", {onProgress: UnityProgress});
+    this.webglInstance = UnityLoader.instantiate(this.webglViewer, "luadebugger/Build/webgl.json", {onProgress: UnityProgress});
 };
 
 
