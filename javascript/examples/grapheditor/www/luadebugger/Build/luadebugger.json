@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "LuaDebuggerProject2",
+"productVersion": "0.1",
+"dataUrl": "luadebugger.data.unityweb",
+"wasmCodeUrl": "luadebugger.wasm.code.unityweb",
+"wasmFrameworkUrl": "luadebugger.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": true,
+"multithreading": false,
+"unityVersion": "2019.3.15f1"
+}
