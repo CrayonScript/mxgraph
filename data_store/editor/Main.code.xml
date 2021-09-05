@@ -37,7 +37,7 @@ do
     end
     do
         -- enable the button
-        GO.LevelSelector.Buttons.RetroClouds.Enable()
+        GO.LevelSelector.Buttons.RetroClouds.Play.EnableButton()
     end
 end
             	]]>
