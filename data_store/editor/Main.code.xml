@@ -3,44 +3,20 @@
         <root>
         	<codeCell cellId="c0">
             	<![CDATA[
--- Main.graph
--- outer block is the main graph block
--- each inner block runs async in a coroutine
+-- CrayonScript.graph
 -- define all the apis
-GO = { path = 'GO'}
-p = 'GO'
-Metatable = {
-    __index = function(t, k)
-        local p = t['path']
-        p = p .. '.' .. k
-        t['path'] = p
-        return GO
-    end,
-    __newindex = function(t, k, v)
-        local p = t['path']
-        Meta.Apply(p, k, v)
-    end,
-    __call = function(t, val1, val2, val3)
-        local p = t['path']
-        Meta.Call(p, val1)
-    end
-}
-setmetatable(GO, Metatable)
 do
-    do
+    series
+        Test.TestSingleFrameAsync();
+        Test.TestSingleFrameAsync();
+        System.Print("System.Print")
         -- wait for the level selection scene to load
-        Events.WaitForEvent("Scenes.LevelSelector.Loaded")
-    end
-    do
+        Events.WaitForEventAsync("Scenes.LevelSelector.Loaded")
         -- load the unity asset async
-        Addressables.LoadScene("Assets/Scenes/LevelSelector.unity")
-    end
-    do
-        -- enable the button
-        GO.LevelSelector.Buttons.RetroClouds.Play.EnableButton()
+        Addressables.LoadSceneAsync("Assets/Scenes/LevelSelector.unity")
     end
 end
-            	]]>
+            ]]>
             </codeCell>
             <codeCell cellId="c1">
             	<![CDATA[
