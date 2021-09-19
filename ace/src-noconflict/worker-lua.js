@@ -2406,14 +2406,12 @@ ace.define("ace/mode/lua/luaparse",[], function(require, exports, module) {
   }
 
   function parseSeriesStatement() {
-    expect('do');
     var body = parseBlock();
     expect('end');
     return finishNode(ast.doStatement(body));
   }
 
   function parseParallelStatement() {
-    expect('do');
     var body = parseBlock();
     expect('end');
     return finishNode(ast.parallelStatement(body));

@@ -1895,7 +1895,6 @@
   //     series ::= 'series do' block 'end'
 
   function parseSeriesStatement(flowContext) {
-    expect('do');
     if (options.scope) createScope();
     flowContext.pushScope();
     var body = parseBlock(flowContext);
@@ -1908,7 +1907,6 @@
   //     parallel ::= 'parallel do' block 'end'
 
   function parseParallelStatement(flowContext) {
-    expect('do');
     if (options.scope) createScope();
     flowContext.pushScope();
     var body = parseBlock(flowContext);
