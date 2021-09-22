@@ -75,6 +75,12 @@
 </head>
 <body class="geEditor">
 	<script type="text/javascript">
+		var editorUI = null;
+		function importCrayonScript()
+		{
+			if (editorUI == null) return null;
+			return editorUI.crayonScript.importScript();
+		}
 		// Extends EditorUi to update I/O action states based on availability of backend
 		(function()
 		{
@@ -166,7 +172,7 @@
 				themes[Graph.prototype.defaultThemeName] = xhr[1].getDocumentElement();
 
 				// Main
-				new EditorUi(new Editor(urlParams['chrome'] == '0', themes));
+				editorUI = new EditorUi(new Editor(urlParams['chrome'] == '0', themes));
 			}, function()
 			{
 				document.body.innerHTML = '<center style="margin-top:10%;">Error loading resource files. Please check browser console.</center>';
