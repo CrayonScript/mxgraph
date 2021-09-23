@@ -592,6 +592,7 @@ html body .geBigStandardButton:active {
 .geSprite-redo { background-position: 0 -644px; }
 .geSprite-right { background-position: 0 -689px; }
 .geSprite-shadow { background-position: 0 -735px; }
+.geSprite-refresh { background-image: url("../images/refresh.png"); background-size: 18px 18px}
 .geSprite-strokecolor { background-position: 0 -782px; }
 .geSprite-top { background-position: 0 -828px; }
 .geSprite-underline { background-position: 0 -874px; }

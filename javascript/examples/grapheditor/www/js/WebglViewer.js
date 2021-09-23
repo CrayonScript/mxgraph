@@ -51,6 +51,12 @@ WebglViewer.prototype.createViewer = function()
     this.webglInstance = UnityLoader.instantiate(this.webglViewer, "luadebugger/Build/luadebugger.json", {onProgress: UnityProgress});
 };
 
+WebglViewer.prototype.refreshViewer = function()
+{
+    //this.webglInstance = UnityLoader.instantiate(this.webglViewer, "webgl/Build/webgl.json", {onProgress: UnityProgress});
+    this.webglInstance = UnityLoader.instantiate(this.webglViewer, "luadebugger/Build/luadebugger.json", {onProgress: UnityProgress});
+}
+
 
 
 

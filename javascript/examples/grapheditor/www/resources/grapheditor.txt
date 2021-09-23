@@ -328,4 +328,5 @@ zoomOut=Zoom Out
 
 # CrayonScript
 workspace=Workspace
+refresh=Refresh
 
