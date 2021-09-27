@@ -1,8 +1,6 @@
 function DebugService(editorUI)
 {
     this.editorUI = editorUI;
-    //this.addItems(['refresh_webgl']);
-    //this.addItems(['refresh_webgl_editor']);
     setTimeout(connectionBackgroundProcess, 1000, this.editorUI, 1);
 }
 
