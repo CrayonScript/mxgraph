@@ -31,20 +31,14 @@ function sendSourceCodeToUnityEditor(editorUI, counter)
     const xmlHTTP = new XMLHttpRequest();
     xmlHTTP.open('POST', 'http://127.0.0.1:10002/source', true);
     xmlHTTP.onreadystatechange = function() { // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 204) {
+        if (this.readyState === XMLHttpRequest.DONE) {
             // Request finished. Do processing here.
+            setTimeout(sendSourceCodeToUnityEditor, 5000, editorUI, ++counter);
         }
     }
-    var source = this.editorUI.blockEditor.getContents();
-    if (source != undefined)
-    {
-        const base64Source = btoa(source)
-        xmlHTTP.send(base64Source);
-    }
-    else
-    {
-        setTimeout(sendSourceCodeToUnityEditor, 1000, editorUI, ++counter);
-    }
+    const source = this.editorUI.blockEditor.getContents();
+    const base64Source = btoa(source)
+    xmlHTTP.send(base64Source);
 }
 
 DebugService.prototype.setBreakpoint = function(row)
