@@ -67,6 +67,8 @@ BlockEditor.prototype.createCodeEditor = function()
     this.codeEditorContainer = elt;
     this.container.appendChild(this.codeEditorContainer);
 
+    var debugService = this.debugService;
+
     const editor = ace.edit(editorId);
     editor.setTheme("ace/theme/vibrant_ink");
     editor.session.setMode("ace/mode/lua");
@@ -79,16 +81,16 @@ BlockEditor.prototype.createCodeEditor = function()
         const target = e.domEvent.target;
         if (target.className.indexOf("ace_gutter-cell") == -1) return;
         if (!editor.isFocused()) return;
-        if (e.clientX > 25 + target.getBoundingClientRect().left) return;
+        if (e.clientX > 50 + target.getBoundingClientRect().left) return;
         const row = e.getDocumentPosition().row;
         const breakpoints = editor.session.getBreakpoints(row, 0);
         // If there's a breakpoint already defined, it should be removed, offering the toggle feature
         if(typeof breakpoints[row] === typeof undefined){
             editor.session.setBreakpoint(row);
-            this.debugService.setBreakpoint(row);
+            debugService.setBreakpoint(row);
         }else{
             editor.session.clearBreakpoint(row);
-            this.debugService.clearBreakpoint(row);
+            debugService.clearBreakpoint(row);
         }
         e.stop();
     });

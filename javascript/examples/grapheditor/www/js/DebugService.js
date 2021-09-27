@@ -1,26 +1,39 @@
 function DebugService(editorUI)
 {
     this.editorUI = editorUI;
-    setTimeout(sendSourceCodeToUnityEditor, 1000, this.editorUI, 1);
-    //setTimeout(pingUnityEditor, 1000, this.editorUI, 1);
+    this.debugRequests = [];
+    setTimeout(sendDebugRequests, 1000, this, 1);
 }
 
-function pingUnityEditor(editorUI, counter)
+function sendDebugRequests(self, counter)
 {
     const xmlHTTP = new XMLHttpRequest();
-    xmlHTTP.open('POST', 'http://127.0.0.1:10002/ping', true);
+    xmlHTTP.open('POST', 'http://127.0.0.1:10002/debug', true);
     xmlHTTP.onreadystatechange = function() { // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            // Request finished. Do processing here.
-            // show the unity toolbar
+        if (this.readyState === XMLHttpRequest.DONE) {
+            if (this.status == 204)
+            {
+                // Request finished. Do processing here.
+                // Clear the existing
+                self.debugRequests.length = 0;
+                if (counter == 1)
+                {
+                    setTimeout(sendSourceCodeToUnityEditor, 5000, this.editorUI, 1);
+                }
+                setTimeout(sendDebugRequests, 3000, self, ++counter);
+            }
+            else
+            {
+                setTimeout(sendDebugRequests, 3000, self, 1);
+            }
         }
-        else
-        {
-            // hide the unity toolbar
-        }
-        setTimeout(pingUnityEditor, 3000, this.editorUI, ++counter);
     }
-    xmlHTTP.send();
+    const debugJSON = {
+        Payload : self.debugRequests
+    }
+    const debug = JSON.stringify(debugJSON);
+    const base64Debug = btoa(debug)
+    xmlHTTP.send(base64Debug);
 }
 
 function sendSourceCodeToUnityEditor(editorUI, counter)
@@ -44,28 +57,23 @@ function sendSourceCodeToUnityEditor(editorUI, counter)
 DebugService.prototype.setBreakpoint = function(row)
 {
     const req = {
-        "cmd": "breakpoint",
-        "arg": "set",
-        "sourceId": -1,
-        "sourceLine": row,
-        "sourceCol": 0
+        cmd: "breakpoint",
+        arg: "set",
+        sourceId: -1,
+        sourceLine: row,
+        sourceCol: 0
     }
-    this.setRequest(req);
+    this.debugRequests.push(req);
 }
 
 DebugService.prototype.clearBreakpoint = function(row)
 {
     const req = {
-        "cmd": "breakpoint",
-        "arg": "clear",
-        "sourceId": -1,
-        "sourceLine": row,
-        "sourceCol": 0
+        cmd: "breakpoint",
+        arg: "clear",
+        sourceId: -1,
+        sourceLine: row,
+        sourceCol: 0
     }
-    this.setRequest(req);
-}
-
-DebugService.prototype.setRequest = function(req)
-{
-    //this.editorUI.SendMessage('Controller', 'SetDebugRequest', req);
+    this.debugRequests.push(req);
 }
