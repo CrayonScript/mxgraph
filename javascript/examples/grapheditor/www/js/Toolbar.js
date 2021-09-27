@@ -173,7 +173,6 @@ Toolbar.prototype.init = function()
 	this.addTableDropDown();
 
 	this.addSeparator();
-	this.addItems(['refresh']);
 };
 
 /**

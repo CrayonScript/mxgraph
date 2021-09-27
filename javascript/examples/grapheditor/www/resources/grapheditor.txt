@@ -328,5 +328,6 @@ zoomOut=Zoom Out
 
 # CrayonScript
 workspace=Workspace
-refresh=Refresh
+refresh_webgl=Refresh WebGL
+refresh_webgl_editor=Refresh Unity Editor
 

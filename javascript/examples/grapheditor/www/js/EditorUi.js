@@ -3934,8 +3934,10 @@ EditorUi.prototype.createUi = function()
 
 	// Code Editor
 	this.container.appendChild(this.blockEditorContainer);
-	this.blockEditor = this.createBlockEditor(this.blockEditorContainer);
 	this.webglViewer = this.createWebglViewer(this.webglContainer);
+	this.blockEditor = this.createBlockEditor(
+		this.blockEditorContainer,
+		new DebugService(this));
 
 	this.container.appendChild(this.webglContainer);
 };
@@ -3971,9 +3973,9 @@ EditorUi.prototype.createToolbar = function(container)
  * Creates a new block editor for the given container.
  * Block editor is composed of a Source Code Editor and a Sheets Editor (similar to google sheets)
  */
-EditorUi.prototype.createBlockEditor = function(container)
+EditorUi.prototype.createBlockEditor = function(container, debugService)
 {
-	return new BlockEditor(this, container);
+	return new BlockEditor(this, container, debugService);
 };
 
 /**

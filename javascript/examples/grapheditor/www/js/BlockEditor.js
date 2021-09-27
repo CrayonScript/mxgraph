@@ -4,10 +4,11 @@
 /**
  * Constructs a new code editor for the given editor
  */
-function BlockEditor(editorUi, container)
+function BlockEditor(editorUi, container, debugService)
 {
     this.editorUi = editorUi;
     this.container = container;
+    this.debugService = debugService;
     this.init();
 };
 
@@ -45,6 +46,11 @@ BlockEditor.prototype.hideCodeView = function()
     this.codeEditorContainer.style.visibility = 'hidden';
 }
 
+BlockEditor.prototype.getContents = function()
+{
+    return this.codeEditor.getValue();
+}
+
 /**
  * Creates a new code editor.
  */
@@ -79,8 +85,10 @@ BlockEditor.prototype.createCodeEditor = function()
         // If there's a breakpoint already defined, it should be removed, offering the toggle feature
         if(typeof breakpoints[row] === typeof undefined){
             editor.session.setBreakpoint(row);
+            this.debugService.setBreakpoint(row);
         }else{
             editor.session.clearBreakpoint(row);
+            this.debugService.clearBreakpoint(row);
         }
         e.stop();
     });
