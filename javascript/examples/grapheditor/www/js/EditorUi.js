@@ -3935,9 +3935,10 @@ EditorUi.prototype.createUi = function()
 	// Code Editor
 	this.container.appendChild(this.blockEditorContainer);
 	this.webglViewer = this.createWebglViewer(this.webglContainer);
+	this.debugService = new DebugService(this);
 	this.blockEditor = this.createBlockEditor(
 		this.blockEditorContainer,
-		new DebugService(this));
+		this.debugService);
 
 	this.container.appendChild(this.webglContainer);
 };

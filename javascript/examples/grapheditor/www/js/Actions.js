@@ -1077,7 +1077,7 @@ Actions.prototype.init = function()
 	this.addAction('vertical', function() { ui.menus.toggleStyle(mxConstants.STYLE_HORIZONTAL, true); });
 	this.addAction('shadow', function() { ui.menus.toggleStyle(mxConstants.STYLE_SHADOW); });
 	this.addAction('refresh_webgl', function() { ui.webglViewer.refreshViewer() });
-	this.addAction('refresh_webgl_editor', function() { ui.webglViewer.refreshViewer() });
+	this.addAction('refresh_webgl_editor', function() { ui.debugService.sendSourceCodeToUnity(); });
 	this.addAction('solid', function()
 	{
 		graph.getModel().beginUpdate();
