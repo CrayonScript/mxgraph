@@ -1,61 +1,21 @@
 function DebugService(editorUI)
 {
     this.editorUI = editorUI;
-    this.debugRequests = [];
-    //setTimeout(sendSourceCodeToUnityEditor, 1000, this.editorUI, 1);
 }
 
-//
-// Instead send debug requests when breakpoints are set
-//
-// function sendDebugRequests(self, counter)
-// {
-//     const xmlHTTP = new XMLHttpRequest();
-//     xmlHTTP.open('POST', 'http://127.0.0.1:10002/debug', true);
-//     xmlHTTP.onreadystatechange = function() { // Call a function when the state changes.
-//         if (this.readyState === XMLHttpRequest.DONE) {
-//             if (this.status == 204)
-//             {
-//                 // Request finished. Do processing here.
-//                 // Clear the existing
-//                 self.debugRequests.length = 0;
-//                 if (counter == 1)
-//                 {
-//                     setTimeout(sendSourceCodeToUnityEditor, 5000, this.editorUI, 1);
-//                 }
-//                 setTimeout(sendDebugRequests, 3000, self, ++counter);
-//             }
-//             else
-//             {
-//                 setTimeout(sendDebugRequests, 3000, self, 1);
-//             }
-//         }
-//     }
-//     const debugJSON = {
-//         Payload : self.debugRequests
-//     }
-//     const debug = JSON.stringify(debugJSON);
-//     const base64Debug = btoa(debug)
-//     xmlHTTP.send(base64Debug);
-// }
+DebugService.prototype.sendDebugRequest = function (debugRequest)
+{
+    const xmlHTTP = new XMLHttpRequest();
+    xmlHTTP.open('POST', 'http://127.0.0.1:10002/debug', true);
+    xmlHTTP.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE) {
 
-// function sendSourceCodeToUnityEditor(editorUI, counter)
-// {
-//     // attempt a connection to the Unity HTTP Server
-//     // if this succeeds, add the Unity refresh button to toolbar
-//     // if this fails, ensure the Unity refresh button is removed from the toolbar
-//     const xmlHTTP = new XMLHttpRequest();
-//     xmlHTTP.open('POST', 'http://127.0.0.1:10002/source', true);
-//     xmlHTTP.onreadystatechange = function() { // Call a function when the state changes.
-//         if (this.readyState === XMLHttpRequest.DONE) {
-//             // Request finished. Do processing here.
-//             setTimeout(sendSourceCodeToUnityEditor, 5000, editorUI, ++counter);
-//         }
-//     }
-//     const source = this.editorUI.blockEditor.getContents();
-//     const base64Source = btoa(source)
-//     xmlHTTP.send(base64Source);
-// }
+        }
+    }
+    const debug = JSON.stringify(debugRequest);
+    const base64Debug = btoa(debug)
+    xmlHTTP.send(base64Debug);
+}
 
 DebugService.prototype.sendSourceCodeToUnity = function()
 {
@@ -83,7 +43,8 @@ DebugService.prototype.setBreakpoint = function(row)
         sourceLine: row,
         sourceCol: 0
     }
-    this.debugRequests.push(req);
+
+    this.sendDebugRequest(req);
 }
 
 DebugService.prototype.clearBreakpoint = function(row)
@@ -95,5 +56,6 @@ DebugService.prototype.clearBreakpoint = function(row)
         sourceLine: row,
         sourceCol: 0
     }
-    this.debugRequests.push(req);
+
+    this.sendDebugRequest(req);
 }
