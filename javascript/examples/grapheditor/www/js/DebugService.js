@@ -39,8 +39,8 @@ DebugService.prototype.setBreakpoint = function(row)
     const req = {
         cmd: "breakpoint",
         arg: "set",
-        sourceId: -1,
-        sourceLine: row,
+        sourceId: 1,
+        sourceLine: (row + 1),
         sourceCol: 0
     }
 
@@ -52,8 +52,8 @@ DebugService.prototype.clearBreakpoint = function(row)
     const req = {
         cmd: "breakpoint",
         arg: "clear",
-        sourceId: -1,
-        sourceLine: row,
+        sourceId: 1,
+        sourceLine: (row + 1),
         sourceCol: 0
     }
 
