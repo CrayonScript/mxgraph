@@ -302,6 +302,13 @@
       };
     }
 
+    , seriesStatement: function(body) {
+      return {
+        type: 'SeriesStatement'
+        , body: body
+      };
+    }
+
     , repeatStatement: function(condition, body) {
       return {
           type: 'RepeatStatement'
@@ -1892,7 +1899,7 @@
     return finishNode(ast.doStatement(body));
   }
 
-  //     series ::= 'series do' block 'end'
+  //     series ::= 'series' block 'end'
 
   function parseSeriesStatement(flowContext) {
     if (options.scope) createScope();
@@ -1901,10 +1908,10 @@
     flowContext.popScope();
     if (options.scope) destroyScope();
     expect('end');
-    return finishNode(ast.doStatement(body));
+    return finishNode(ast.seriesStatement(body));
   }
 
-  //     parallel ::= 'parallel do' block 'end'
+  //     parallel ::= 'parallel' block 'end'
 
   function parseParallelStatement(flowContext) {
     if (options.scope) createScope();
