@@ -36,24 +36,18 @@ DebugService.prototype.sendSourceCodeToUnity = function()
 
 DebugService.prototype.setBreakpoint = function(row)
 {
-    const source = this.editorUI.blockEditor.getContents();
-    const ast = luaparse.parse(source);
-    const tokens = ast.tokens;
-
+    const tokens = getSourceCodeTokens();
     const sourceLine = (row + 1);
+    if (!isValidSourceCodeAtLine(tokens, sourceLine)) return false;
 
-    if (!(sourceLine in tokens))
-    {
-        // not a valid breakpoint
-        return false;
-    }
+    const sourceCol = getSourceCodeCol(tokens, sourceLine);
 
     const req = {
         cmd: "breakpoint",
         arg: "set",
         sourceId: 1,
         sourceLine: sourceLine,
-        sourceCol: 0
+        sourceCol: sourceCol
     }
 
     this.sendDebugRequest(req);
@@ -63,27 +57,53 @@ DebugService.prototype.setBreakpoint = function(row)
 
 DebugService.prototype.clearBreakpoint = function(row)
 {
-    const source = this.editorUI.blockEditor.getContents();
-    const ast = luaparse.parse(source);
-    const tokens = ast.tokens;
-
+    const tokens = getSourceCodeTokens();
     const sourceLine = (row + 1);
+    if (!isValidSourceCodeAtLine(tokens, sourceLine)) return false;
 
-    if (!(sourceLine in tokens))
-    {
-        // not a valid breakpoint
-        return false;
-    }
+    const sourceCol = getSourceCodeCol(tokens, sourceLine);
 
     const req = {
         cmd: "breakpoint",
         arg: "clear",
         sourceId: 1,
         sourceLine: sourceLine,
-        sourceCol: 0
+        sourceCol: sourceCol
     }
 
     this.sendDebugRequest(req);
 
     return true;
+}
+
+function getSourceCodeTokens()
+{
+    const source = getSourceCode();
+    const ast = luaparse.parse(source);
+    const tokens = ast.tokens;
+
+    return tokens;
+}
+
+function getSourceCode()
+{
+    const source = this.editorUI.blockEditor.getContents();
+    return source;
+}
+
+function isValidSourceCodeAtLine(tokens, sourceLine)
+{
+    return (sourceLine in tokens);
+}
+
+function getSourceCodeCol(tokens, sourceLine)
+{
+    let sourceCol = 0;
+    const token = tokens[sourceLine];
+    const tokenObj = token.at(-1);
+    if (tokenObj.type == 32)
+    {
+        sourceCol = tokenObj.range[1] - tokenObj.lineStart;
+    }
+    return sourceCol;
 }
