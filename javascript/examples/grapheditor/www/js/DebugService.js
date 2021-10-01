@@ -36,19 +36,45 @@ DebugService.prototype.sendSourceCodeToUnity = function()
 
 DebugService.prototype.setBreakpoint = function(row)
 {
+    const source = this.editorUI.blockEditor.getContents();
+    const ast = luaparse.parse(source);
+    const tokens = ast.tokens;
+
+    const sourceLine = (row + 1);
+
+    if (!(sourceLine in tokens))
+    {
+        // not a valid breakpoint
+        return false;
+    }
+
     const req = {
         cmd: "breakpoint",
         arg: "set",
         sourceId: 1,
-        sourceLine: (row + 1),
+        sourceLine: sourceLine,
         sourceCol: 0
     }
 
     this.sendDebugRequest(req);
+
+    return true;
 }
 
 DebugService.prototype.clearBreakpoint = function(row)
 {
+    const source = this.editorUI.blockEditor.getContents();
+    const ast = luaparse.parse(source);
+    const tokens = ast.tokens;
+
+    const sourceLine = (row + 1);
+
+    if (!(sourceLine in tokens))
+    {
+        // not a valid breakpoint
+        return false;
+    }
+
     const req = {
         cmd: "breakpoint",
         arg: "clear",
@@ -58,4 +84,6 @@ DebugService.prototype.clearBreakpoint = function(row)
     }
 
     this.sendDebugRequest(req);
+
+    return true;
 }

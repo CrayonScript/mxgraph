@@ -86,11 +86,13 @@ BlockEditor.prototype.createCodeEditor = function()
         const breakpoints = editor.session.getBreakpoints(row, 0);
         // If there's a breakpoint already defined, it should be removed, offering the toggle feature
         if(typeof breakpoints[row] === typeof undefined){
-            editor.session.setBreakpoint(row);
-            debugService.setBreakpoint(row);
+            if (debugService.setBreakpoint(row)) {
+                editor.session.setBreakpoint(row);
+            }
         }else{
-            editor.session.clearBreakpoint(row);
-            debugService.clearBreakpoint(row);
+            if (debugService.clearBreakpoint(row)) {
+                editor.session.clearBreakpoint(row);
+            }
         }
         e.stop();
     });
