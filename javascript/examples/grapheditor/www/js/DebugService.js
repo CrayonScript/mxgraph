@@ -79,7 +79,7 @@ DebugService.prototype.clearBreakpoint = function(row)
         cmd: "breakpoint",
         arg: "clear",
         sourceId: 1,
-        sourceLine: (row + 1),
+        sourceLine: sourceLine,
         sourceCol: 0
     }
 
