@@ -509,6 +509,16 @@
     return node;
   }
 
+  function addToken(tkn)
+  {
+    if (!tkn) return;
+    if (!(tkn.line in tokens))
+    {
+      tokens[tkn.line] = [];
+    }
+    tokens[tkn.line].push(tkn);
+  }
+
 
   // Helpers
   // -------
@@ -710,6 +720,8 @@
     , tokenStart
     , line
     , lineStart;
+
+  var tokens = {};
 
   exports.lex = lex;
 
@@ -1855,6 +1867,7 @@
   //     label ::= '::' Name '::'
 
   function parseLabelStatement(flowContext) {
+    const lblTkn = token;
     var nameToken = token
       , label = parseIdentifier();
 
@@ -1866,12 +1879,14 @@
     expect('::');
 
     flowContext.addLabel(nameToken.value, nameToken);
+    addToken(lblTkn);
     return finishNode(ast.labelStatement(label));
   }
 
   //     break ::= 'break'
 
   function parseBreakStatement() {
+    addToken(token);
     consume(';');
     return finishNode(ast.breakStatement());
   }
@@ -1879,6 +1894,7 @@
   //     goto ::= 'goto' Name
 
   function parseGotoStatement(flowContext) {
+    addToken(token);
     var name = token.value
       , gotoToken = previousToken
       , label = parseIdentifier();
@@ -1890,6 +1906,7 @@
   //     do ::= 'do' block 'end'
 
   function parseDoStatement(flowContext) {
+    addToken(previousToken);
     if (options.scope) createScope();
     flowContext.pushScope();
     var body = parseBlock(flowContext);
@@ -1902,6 +1919,7 @@
   //     series ::= 'series' block 'end'
 
   function parseSeriesStatement(flowContext) {
+    addToken(previousToken);
     if (options.scope) createScope();
     flowContext.pushScope();
     var body = parseBlock(flowContext);
@@ -1914,6 +1932,7 @@
   //     parallel ::= 'parallel' block 'end'
 
   function parseParallelStatement(flowContext) {
+    addToken(previousToken);
     if (options.scope) createScope();
     flowContext.pushScope();
     var body = parseBlock(flowContext);
@@ -1926,6 +1945,7 @@
   //     while ::= 'while' exp 'do' block 'end'
 
   function parseWhileStatement(flowContext) {
+    addToken(previousToken);
     var condition = parseExpectedExpression(flowContext);
     expect('do');
     if (options.scope) createScope();
@@ -1940,6 +1960,7 @@
   //     repeat ::= 'repeat' block 'until' exp
 
   function parseRepeatStatement(flowContext) {
+    addToken(previousToken);
     if (options.scope) createScope();
     flowContext.pushScope(true);
     var body = parseBlock(flowContext);
@@ -1954,6 +1975,7 @@
   //     retstat ::= 'return' [exp {',' exp}] [';']
 
   function parseReturnStatement(flowContext) {
+    addToken(previousToken);
     var expressions = [];
 
     if ('end' !== token.value) {
@@ -1972,6 +1994,7 @@
   //     elif ::= 'elseif' exp 'then' block
 
   function parseIfStatement(flowContext) {
+    addToken(previousToken);
     var clauses = []
       , condition
       , body
@@ -1985,6 +2008,7 @@
     }
     condition = parseExpectedExpression(flowContext);
     expect('then');
+    const ifPartTkn = token;
     if (options.scope) createScope();
     flowContext.pushScope();
     body = parseBlock(flowContext);
@@ -1994,6 +2018,7 @@
 
     if (trackLocations) marker = createLocationMarker();
     while (consume('elseif')) {
+      addToken(token);
       pushLocation(marker);
       condition = parseExpectedExpression(flowContext);
       expect('then');
@@ -2007,6 +2032,7 @@
     }
 
     if (consume('else')) {
+      addToken(token);
       // Include the `else` in the location of ElseClause.
       if (trackLocations) {
         marker = new Marker(previousToken);
@@ -2046,6 +2072,7 @@
     // Numeric For Statement.
     if (consume('=')) {
       // Start expression
+      addToken(token);
       var start = parseExpectedExpression(flowContext);
       expect(',');
       // End expression
@@ -2064,6 +2091,7 @@
     }
     // If not, it's a Generic For Statement
     else {
+      addToken(token);
       // The namelist can contain one or more identifiers.
       var variables = [variable];
       while (consume(',')) {
@@ -2103,6 +2131,7 @@
   //        | 'local' Name {',' Name} ['=' exp {',' exp}]
 
   function parseLocalStatement(flowContext) {
+    addToken(token);
     var name
       , declToken = previousToken;
 
@@ -2245,6 +2274,7 @@
   //     Identifier ::= Name
 
   function parseIdentifier() {
+    addToken(token);
     markLocation();
     var identifier = token.value;
     if (Identifier !== token.type) raiseUnexpectedToken('<name>', token);
@@ -2263,6 +2293,7 @@
   //     parlist ::= Name {',' Name} | [',' '...'] | '...'
 
   function parseFunctionDeclaration(name, isLocal) {
+    addToken(token);
     var flowContext = makeFlowContext();
     flowContext.pushScope();
 
@@ -2320,12 +2351,14 @@
     }
 
     while (consume('.')) {
+      addToken(token);
       pushLocation(marker);
       name = parseIdentifier();
       base = finishNode(ast.memberExpression(base, '.', name));
     }
 
     if (consume(':')) {
+      addToken(token);
       pushLocation(marker);
       name = parseIdentifier();
       base = finishNode(ast.memberExpression(base, ':', name));
@@ -2342,12 +2375,14 @@
   //     fieldsep ::= ',' | ';'
 
   function parseTableConstructor(flowContext) {
+    addToken(token);
     var fields = []
       , key, value;
 
     while (true) {
       markLocation();
       if (Punctuator === token.type && consume('[')) {
+        addToken(token);
         key = parseExpectedExpression(flowContext);
         expect(']');
         expect('=');
@@ -2355,15 +2390,18 @@
         fields.push(finishNode(ast.tableKey(key, value)));
       } else if (Identifier === token.type) {
         if ('=' === lookahead.value) {
+          addToken(token);
           key = parseIdentifier();
           next();
           value = parseExpectedExpression(flowContext);
           fields.push(finishNode(ast.tableKeyString(key, value)));
         } else {
+          addToken(token);
           value = parseExpectedExpression(flowContext);
           fields.push(finishNode(ast.tableValue(value)));
         }
       } else {
+        addToken(token);
         if (null == (value = parseExpression(flowContext))) {
           locations.pop();
           break;
@@ -2481,6 +2519,9 @@
     // This is not a valid left hand expression.
     if (null == expression) return null;
 
+    // add the expression token (would be previousToken)
+    addToken(previousToken);
+
     var precedence;
     while (true) {
       operator = token.value;
@@ -2514,17 +2555,20 @@
     if (Punctuator === token.type) {
       switch (token.value) {
         case '[':
+          addToken(token);
           pushLocation(marker);
           next();
           expression = parseExpectedExpression(flowContext);
           expect(']');
           return finishNode(ast.indexExpression(base, expression));
         case '.':
+          addToken(token);
           pushLocation(marker);
           next();
           identifier = parseIdentifier();
           return finishNode(ast.memberExpression(base, '.', identifier));
         case ':':
+          addToken(token);
           pushLocation(marker);
           next();
           identifier = parseIdentifier();
@@ -2580,6 +2624,7 @@
     if (Punctuator === token.type) {
       switch (token.value) {
         case '(':
+          addToken(token);
           if (!features.emptyStatement) {
             if (token.line !== previousToken.line)
               raise(null, errors.ambiguousSyntax, token.value);
@@ -2589,22 +2634,27 @@
           // List of expressions
           var expressions = [];
           var expression = parseExpression(flowContext);
+          // add token for expression
           if (null != expression) expressions.push(expression);
           while (consume(',')) {
             expression = parseExpectedExpression(flowContext);
+            // add token for expression
             expressions.push(expression);
           }
 
+          addToken(token);
           expect(')');
           return finishNode(ast.callExpression(base, expressions));
 
         case '{':
+          addToken(token);
           markLocation();
           next();
           var table = parseTableConstructor(flowContext);
           return finishNode(ast.tableCallExpression(base, table));
       }
     } else if (StringLiteral === token.type) {
+      addToken(token);
       return finishNode(ast.stringCallExpression(base, parsePrimaryExpression(flowContext)));
     }
 
@@ -2629,6 +2679,7 @@
     if (type & literals) {
       pushLocation(marker);
       var raw = input.slice(token.range[0], token.range[1]);
+      token.value = raw;
       next();
       return finishNode(ast.literal(type, value, raw));
     } else if (Keyword === type && 'function' === value) {
@@ -2705,6 +2756,7 @@
   };
 
   function parse(_input, _options) {
+    tokens = {};
     if ('undefined' === typeof _options && 'object' === typeof _input) {
       _options = _input;
       _input = undefined;
@@ -2777,6 +2829,7 @@
     if (locations.length > 0)
       throw new Error('Location tracking failed. This is most likely a bug in luaparse');
 
+    chunk.tokens = tokens;
     return chunk;
   }
 
