@@ -5,16 +5,8 @@ function DebugService(editorUI)
 
 DebugService.prototype.sendDebugRequest = function (debugRequest)
 {
-    const xmlHTTP = new XMLHttpRequest();
-    xmlHTTP.open('POST', 'http://127.0.0.1:10002/debug', true);
-    xmlHTTP.onreadystatechange = function() { // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE) {
-
-        }
-    }
-    const debug = JSON.stringify(debugRequest);
-    const base64Debug = btoa(debug)
-    xmlHTTP.send(base64Debug);
+   const unityService = this.editorUI.unityService;
+   unityService.postRequest('debug', debugRequest);
 }
 
 DebugService.prototype.sendSourceCodeToUnity = function()
