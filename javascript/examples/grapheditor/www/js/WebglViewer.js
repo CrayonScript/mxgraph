@@ -57,7 +57,16 @@ WebglViewer.prototype.refreshViewer = function()
     this.webglInstance = UnityLoader.instantiate(this.webglViewer, "luadebugger/Build/luadebugger.json", {onProgress: UnityProgress});
 }
 
+WebglViewer.prototype.sendRequest = function(action, reqJSON)
+{
+    const reqStr = JSON.stringify(reqJSON);
+    const reqBase64 = btoa(reqStr);
 
-
-
-
+    const wrapperJSON = {
+        action: action,
+        reqBase64: reqBase64
+    };
+    const wrapperStr = JSON.stringify(wrapperJSON);
+    const wrapperBase64 = btoa(wrapperStr);
+    this.webglInstance.SendMessage('Controller', 'WebGLDataReceived', wrapperBase64);
+}

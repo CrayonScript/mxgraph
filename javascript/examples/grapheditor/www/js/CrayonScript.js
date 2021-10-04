@@ -114,9 +114,10 @@ CrayonScript.prototype.getData = function(cell)
 
 CrayonScript.prototype.importScript = function()
 {
-    const codeObject = this.codeObjects[0];
-    const code = codeObject.cellContent;
-    return code;
+    const cell = this.findCell("c0");
+    const code = this.getCode(cell);
+    const base64Code = btoa(code);
+    return base64Code;
 }
 
 CrayonScript.prototype.getCode = function(cell)
@@ -125,6 +126,7 @@ CrayonScript.prototype.getCode = function(cell)
         let codeObject = this.codeObjects[codeKey];
         if (codeObject.cellId == cell.getId()) {
             let code = codeObject.cellContent;
+            code = code.trim();
             return code;
         }
     }

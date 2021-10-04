@@ -78,10 +78,15 @@
 <body class="geEditor">
 	<script type="text/javascript">
 		var editorUI = null;
-		function importCrayonScript()
+		function importCrayonScriptSourceCode()
 		{
 			if (editorUI == null) return null;
 			return editorUI.crayonScript.importScript();
+		}
+		function importCrayonScriptDebugData()
+		{
+			if (editorUI == null) return null;
+			return editorUI.debugService.importDebugData();
 		}
 		// Extends EditorUi to update I/O action states based on availability of backend
 		(function()

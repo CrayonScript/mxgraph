@@ -14,6 +14,6 @@ UnityService.prototype.postRequest = function(action, jsonReq)
         }
     }
     const jsonStr = JSON.stringify(jsonReq);
-    const base64Str = btoa(jsonStr)
+    const base64Str = btoa(jsonStr);
     xmlHTTP.send(base64Str);
 }

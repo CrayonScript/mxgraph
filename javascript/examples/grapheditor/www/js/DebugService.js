@@ -1,19 +1,33 @@
 function DebugService(editorUI)
 {
     this.editorUI = editorUI;
+    this.debugRequests = [];
+}
+
+DebugService.prototype.importDebugData = function()
+{
+    const debugDataArr = {
+        Payload: this.debugRequests
+    }
+    const debugDataStr = JSON.stringify(debugDataArr);
+    const debugDataBase64 = btoa(debugDataStr);
+    return debugDataBase64;
 }
 
 DebugService.prototype.sendDebugRequest = function (debugRequest)
 {
-   const unityService = this.editorUI.unityService;
-   unityService.postRequest('debug', debugRequest);
+    // add to the debug requests
+    this.debugRequests.push(debugRequest);
+
+    const unityService = this.editorUI.unityService;
+    unityService.postRequest('debug', debugRequest);
+
+    const webglService = this.editorUI.webglViewer;
+    webglService.sendRequest('debug', debugRequest);
 }
 
-DebugService.prototype.sendSourceCodeToUnity = function()
+DebugService.prototype.refreshUnity = function()
 {
-    // attempt a connection to the Unity HTTP Server
-    // if this succeeds, add the Unity refresh button to toolbar
-    // if this fails, ensure the Unity refresh button is removed from the toolbar
     const xmlHTTP = new XMLHttpRequest();
     xmlHTTP.open('POST', 'http://127.0.0.1:10002/source', true);
     xmlHTTP.onreadystatechange = function() { // Call a function when the state changes.
