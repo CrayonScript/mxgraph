@@ -2504,7 +2504,10 @@ Sidebar.prototype.createTitle = function(label)
  */
 Sidebar.prototype.createThumb = function(cells, width, height, parent, title, showLabel, showTitle, realWidth, realHeight)
 {
-	this.graph.labelsVisible = (showLabel == null || showLabel);
+	showLabel = true;
+	showTitle = true;
+
+	this.graph.labelsVisible = true;
 	var fo = mxClient.NO_FO;
 	mxClient.NO_FO = Editor.prototype.originalNoForeignObject;
 	this.graph.view.scaleAndTranslate(1, 0, 0);
@@ -2554,7 +2557,17 @@ Sidebar.prototype.createThumb = function(cells, width, height, parent, title, sh
 	node.style.minWidth = '';
 	node.style.minHeight = '';
 
-	parent.appendChild(node);
+	parent.style.width = width * 2 + 'px';
+
+	const titleDiv = document.createElement('div');
+	titleDiv.innerHTML = title;
+	//titleDiv.appendChild(node);
+
+	parent.appendChild(titleDiv);
+
+	parent.style.display = 'block';
+	parent.style.height = height + 'px';
+	parent.style.width = width * 4 + 'px';
 
 	// Adds title for sidebar entries
 	if (this.sidebarTitles && title != null && showTitle != false)
