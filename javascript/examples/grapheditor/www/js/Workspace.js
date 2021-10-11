@@ -1,12 +1,12 @@
 /**
  * Copyright (c) CrayonScript
  *
- * Constructs a new workspace for the given editor
+ * Constructs a new workspace for the given editor sidebar
  */
-function Workspace(editorUi, container)
+function Workspace(sidebar)
 {
-    this.editorUi = editorUi;
-    this.container = container;
+    this.sidebar = sidebar;
+    this.editorUi = sidebar.editorUi;
     this.init();
 };
 
@@ -35,24 +35,17 @@ Workspace.prototype.hideViewer = function()
  */
 Workspace.prototype.createUnityWorkspace = function()
 {
-    //
-    // unity workspace
-    //
-    this.unityWorkspace = document.createElement('div');
-    this.unityWorkspace.id = "unityWorkspace";
-    this.unityWorkspace.className = 'geUnityWorkspaceContainer';
-    this.container.appendChild(this.unityWorkspace);
-    this.workspace = null;
+    const sidebar = this.sidebar;
+    const lineTags = 'line lines connector connectors connection connections arrow arrows ';
+    sidebar.setCurrentSearchEntryLibrary('workspace', 'workspace');
 
-    mxUtils.post(WORKSPACE_URL, '', mxUtils.bind(this, function(req)
-    {
-        const encodedText = req.getText();
-        const plainText = decodeURIComponent(encodedText);
-        if (plainText != null)
-        {
-            const workspace = JSON.parse(plainText);
-        }
-    }));
+    var fns = [
+        sidebar.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
+        sidebar.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
+    ];
+
+    sidebar.addPaletteFunctions('workspace', mxResources.get('workspace'), true, fns);
+    sidebar.setCurrentSearchEntryLibrary();
 };
 
 

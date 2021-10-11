@@ -82,8 +82,8 @@ EditorUi = function(editor, container, lightbox)
 			this.diagramContainer.onmousedown = textEditing;
 			this.blockEditorContainer.onselectstart = textEditing;
 			this.blockEditorContainer.onmousedown = textEditing;
-			this.webglContainer.onselectstart = textEditing;
-			this.webglContainer.onmousedown = textEditing;
+			// this.webglContainer.onselectstart = textEditing;
+			// this.webglContainer.onmousedown = textEditing;
 			this.sidebarContainer.onselectstart = textEditing;
 			this.sidebarContainer.onmousedown = textEditing;
 			this.formatContainer.onselectstart = textEditing;
@@ -1001,7 +1001,7 @@ EditorUi.prototype.formatEnabled = true;
 /**
  * Specifies the width of the format panel. Default is 240.
  */
-EditorUi.prototype.formatWidth = 240;
+EditorUi.prototype.formatWidth = 0; //240;
 
 /**
  * Specifies the height of the toolbar. Default is 38.
@@ -1028,13 +1028,13 @@ EditorUi.prototype.hsplitPosition = (screen.width <= 640) ? 118 : ((urlParams['s
  * Specifies the position of the horizontal split bar. Default is 240 or 118 for
  * screen widths <= 640px.
  */
-EditorUi.prototype.hsplit2Position = (screen.width <= 640) ? 318 : ((urlParams['sidebar-entries'] != 'large') ? 552 : 390);
+// EditorUi.prototype.hsplit2Position = (screen.width <= 640) ? 318 : ((urlParams['sidebar-entries'] != 'large') ? 552 : 390);
 
 /**
  * Specifies the position of the vertical split bar. Default is 240 or 118 for
  * screen heights <= 640px.
  */
-EditorUi.prototype.vsplitPosition = (screen.height <= 640) ? 118 : ((urlParams['sidebar-entries'] != 'large') ? 312 : 340);
+// EditorUi.prototype.vsplitPosition = (screen.height <= 640) ? 118 : ((urlParams['sidebar-entries'] != 'large') ? 312 : 340);
 
 /**
  * Specifies if animations are allowed in <executeLayout>. Default is true.
@@ -3628,8 +3628,8 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 	}
 
 	var effHsplitPosition = Math.max(0, Math.min(this.hsplitPosition, w - this.splitSize - 20));
-	var effHsplit2Position = Math.max(0, Math.min(this.hsplit2Position, w - this.splitSize - 20));
-	var effVSplitPosition = Math.max(0, Math.min(this.vsplitPosition, h - this.splitSize - 20));
+	// var effHsplit2Position = Math.max(0, Math.min(this.hsplit2Position, w - this.splitSize - 20));
+	// var effVSplitPosition = Math.max(0, Math.min(this.vsplitPosition, h - this.splitSize - 20));
 	var tmp = 0;
 
 	if (this.menubar != null)
@@ -3670,28 +3670,33 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 
 	var diagContOffset = this.getDiagramContainerOffset();
 	var contLeft = (this.hsplit.parentNode != null) ? (effHsplitPosition + this.splitSize) : 0;
-	this.diagramContainer.style.left =  (contLeft + diagContOffset.x) + 'px';
-	this.diagramContainer.style.top = (tmp + diagContOffset.y) + 'px';
-	this.diagramContainer.style.right = ((this.hsplit2.parentNode != null) ? (w - effHsplit2Position - this.splitSize) : 0) + 'px';
+	// this.diagramContainer.style.left =  (contLeft + diagContOffset.x) + 'px';
+	// this.diagramContainer.style.top = (tmp + diagContOffset.y) + 'px';
+	// this.diagramContainer.style.right = ((this.hsplit2.parentNode != null) ? (w - effHsplit2Position - this.splitSize) : 0) + 'px';
 	this.blockEditorContainer.style.top = (tmp + diagContOffset.y) + 'px';
-	this.blockEditorContainer.style.left = ((this.hsplit2.parentNode != null) ? (effHsplit2Position + this.splitSize + 2) : 0) + 'px';
+	this.blockEditorContainer.style.left = ((this.hsplit.parentNode != null) ? (effHsplitPosition + this.splitSize + 2) : 0) + 'px';
 	this.blockEditorContainer.style.right = ((this.format != null) ? this.formatWidth : 0) + 'px';
-	this.blockEditorContainer.style.bottom = ((this.vsplit.parentNode != null) ?
-		(this.vsplitPosition + this.splitSize) : 0) + 'px';
-	this.webglContainer.style.top = ((this.vsplit.parentNode != null) ? (h - this.vsplitPosition) : 0) + 'px';
-	this.webglContainer.style.left = this.blockEditorContainer.style.left;
-	this.webglContainer.style.right = this.blockEditorContainer.style.right;
-	this.webglContainer.style.bottom = (this.footerHeight + sidebarFooterHeight + off) + 'px';
-	this.footerContainer.style.height = this.footerHeight + 'px';
+	// this.blockEditorContainer.style.bottom = ((this.vsplit.parentNode != null) ?
+	// 	(this.vsplitPosition + this.splitSize) : 0) + 'px';
+	// this.webglContainer.style.top = ((this.vsplit.parentNode != null) ? (h - this.vsplitPosition) : 0) + 'px';
+	// this.webglContainer.style.left = this.blockEditorContainer.style.left;
+	// this.webglContainer.style.right = this.blockEditorContainer.style.right;
+	// this.webglContainer.style.bottom = (this.footerHeight + sidebarFooterHeight + off) + 'px';
+
+	this.blockEditorContainer.style.top = (tmp + diagContOffset.y) + 'px';
+	this.blockEditorContainer.style.left = this.blockEditorContainer.style.left;
+	this.blockEditorContainer.style.right = this.blockEditorContainer.style.right;
+	this.blockEditorContainer.style.bottom = (this.footerHeight + sidebarFooterHeight + off) + 'px';
+	//this.blockEditorContainer.style.height = this.footerHeight + 'px';
 	this.hsplit.style.top = this.sidebarContainer.style.top;
 	this.hsplit.style.bottom = (this.footerHeight + off) + 'px';
 	this.hsplit.style.left = effHsplitPosition + 'px';
-	this.hsplit2.style.top = this.sidebarContainer.style.top;
-	this.hsplit2.style.bottom = (this.footerHeight + off) + 'px';
-	this.hsplit2.style.left = effHsplit2Position + 'px';
-	this.vsplit.style.bottom = effVSplitPosition + 'px';
-	this.vsplit.style.left = this.blockEditorContainer.style.left;
-	this.vsplit.style.right = this.blockEditorContainer.style.right;
+	// this.hsplit2.style.top = this.sidebarContainer.style.top;
+	// this.hsplit2.style.bottom = (this.footerHeight + off) + 'px';
+	// this.hsplit2.style.left = effHsplit2Position + 'px';
+	// this.vsplit.style.bottom = effVSplitPosition + 'px';
+	// this.vsplit.style.left = this.blockEditorContainer.style.left;
+	// this.vsplit.style.right = this.blockEditorContainer.style.right;
 	this.footerContainer.style.display = (this.footerHeight == 0) ? 'none' : '';
 
 	if (this.tabContainer != null)
@@ -3718,7 +3723,7 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 
 		this.diagramContainer.style.height = diagramHeight + 'px';
 		this.hsplit.style.height = diagramHeight + 'px';
-		this.hsplit2.style.height = diagramHeight + 'px';
+		// this.hsplit2.style.height = diagramHeight + 'px';
 	}
 	else
 	{
@@ -3768,13 +3773,13 @@ EditorUi.prototype.createDivs = function()
 	this.diagramContainer = this.createDiv('geDiagramContainer');
 	this.footerContainer = this.createDiv('geFooterContainer');
 	this.blockEditorContainer = this.createDiv('geBlockEditorContainer');
-	this.webglContainer = this.createDiv('geWebglContainer');
+	// this.webglContainer = this.createDiv('geWebglContainer');
 	this.hsplit = this.createDiv('geHsplit');
 	this.hsplit.setAttribute('title', mxResources.get('collapseExpand'));
-	this.hsplit2 = this.createDiv('geHsplit');
-	this.hsplit2.setAttribute('title', mxResources.get('collapseExpand'));
-	this.vsplit = this.createDiv('geVsplit');
-	this.vsplit.setAttribute('title', mxResources.get('collapseExpand'));
+	// this.hsplit2 = this.createDiv('geHsplit');
+	// this.hsplit2.setAttribute('title', mxResources.get('collapseExpand'));
+	// this.vsplit = this.createDiv('geVsplit');
+	// this.vsplit.setAttribute('title', mxResources.get('collapseExpand'));
 
 	// Sets static style for containers
 	this.menubarContainer.style.top = '0px';
@@ -3786,14 +3791,14 @@ EditorUi.prototype.createDivs = function()
 	this.formatContainer.style.right = '0px';
 	this.formatContainer.style.zIndex = '1';
 	this.blockEditorContainer.style.left = '0x';
-	this.webglContainer.style.left = '0x;'
+	// this.webglContainer.style.left = '0x;'
 	this.footerContainer.style.left = '0px';
 	this.footerContainer.style.right = '0px';
 	this.footerContainer.style.bottom = '0px';
 	this.footerContainer.style.zIndex = mxPopupMenu.prototype.zIndex - 2;
 	this.hsplit.style.width = this.splitSize + 'px';
-	this.hsplit2.style.width = this.splitSize + 'px';
-	this.vsplit.style.height = this.splitSize + 'px';
+	// this.hsplit2.style.width = this.splitSize + 'px';
+	// this.vsplit.style.height = this.splitSize + 'px';
 	this.sidebarFooterContainer = this.createSidebarFooterContainer();
 
 	if (this.sidebarFooterContainer)
@@ -3880,7 +3885,8 @@ EditorUi.prototype.createUi = function()
 		this.container.appendChild(this.sidebarFooterContainer);
 	}
 
-	this.container.appendChild(this.diagramContainer);
+	// TODO: FIXME remove diagramContainer
+	// this.container.appendChild(this.diagramContainer);
 
 	if (this.container != null && this.tabContainer != null)
 	{
@@ -3909,39 +3915,39 @@ EditorUi.prototype.createUi = function()
 	}
 
 	// HSplit2
-	if (this.diagramContainer != null)
-	{
-		this.container.appendChild(this.hsplit2);
-
-		this.addSplitHandler(this.hsplit2, true, true, 0, mxUtils.bind(this, function(value)
-		{
-			this.hsplit2Position = value;
-			this.refresh();
-		}));
-	}
+	// if (this.diagramContainer != null)
+	// {
+	// 	this.container.appendChild(this.hsplit2);
+	//
+	// 	this.addSplitHandler(this.hsplit2, true, true, 0, mxUtils.bind(this, function(value)
+	// 	{
+	// 		this.hsplit2Position = value;
+	// 		this.refresh();
+	// 	}));
+	// }
 
 	// VSplit
 	if (this.blockEditorContainer != null)
 	{
-		this.container.appendChild(this.vsplit);
+		// this.container.appendChild(this.vsplit);
 
-		this.addSplitHandler(this.vsplit, false, true, 0, mxUtils.bind(this, function(value)
-		{
-			this.vsplitPosition = value + this.splitSize + 20;
-			this.refresh();
-		}));
+		// this.addSplitHandler(this.vsplit, false, true, 0, mxUtils.bind(this, function(value)
+		// {
+		// 	this.vsplitPosition = value + this.splitSize + 20;
+		// 	this.refresh();
+		// }));
 	}
 
 	// Code Editor
 	this.container.appendChild(this.blockEditorContainer);
-	this.webglViewer = this.createWebglViewer(this.webglContainer);
+	// this.webglViewer = this.createWebglViewer(this.webglContainer);
 	this.unityService = new UnityService(this);
 	this.debugService = new DebugService(this);
 	this.blockEditor = this.createBlockEditor(
 		this.blockEditorContainer,
 		this.debugService);
 
-	this.container.appendChild(this.webglContainer);
+	// this.container.appendChild(this.webglContainer);
 };
 
 /**
@@ -3983,10 +3989,10 @@ EditorUi.prototype.createBlockEditor = function(container, debugService)
 /**
  * Creates a new webgl viewer for the given container.
  */
-EditorUi.prototype.createWebglViewer = function(container)
-{
-	return new WebglViewer(this, container);
-};
+// EditorUi.prototype.createWebglViewer = function(container)
+// {
+// 	return new WebglViewer(this, container);
+// };
 
 /**
  * Creates a new sidebar for the given container.
@@ -5163,11 +5169,11 @@ EditorUi.prototype.destroy = function()
 		this.blockEditor = null;
 	}
 
-	if (this.webglViewer != null)
-	{
-		this.webglViewer.destroy();
-		this.webglViewer = null;
-	}
+	// if (this.webglViewer != null)
+	// {
+	// 	this.webglViewer.destroy();
+	// 	this.webglViewer = null;
+	// }
 
 	if (this.sidebar != null)
 	{
@@ -5228,9 +5234,9 @@ EditorUi.prototype.destroy = function()
 	}
 
 	var c = [this.menubarContainer, this.toolbarContainer, this.sidebarContainer,
-	         this.formatContainer, this.diagramContainer, this.footerContainer,
-	         this.chromelessToolbar, this.hsplit, this.hsplit2, this.vsplit, this.sidebarFooterContainer,
-	         this.layersDialog, this.blockEditorContainer, this.webglContainer];
+	         this.formatContainer, /* this.diagramContainer, */ this.footerContainer,
+	         this.chromelessToolbar, this.hsplit, /*this.hsplit2, */ /* this.vsplit, */ this.sidebarFooterContainer,
+	         this.layersDialog, this.blockEditorContainer/*, this.webglContainer*/];
 
 	for (var i = 0; i < c.length; i++)
 	{
