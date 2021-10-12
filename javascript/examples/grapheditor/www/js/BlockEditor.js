@@ -52,7 +52,8 @@ BlockEditor.prototype.hideCodeView = function()
 
 BlockEditor.prototype.getContents = function()
 {
-    return this.codeEditor.getValue();
+    let value = this.codeEditor.getValue();
+    return value;
 }
 
 /**

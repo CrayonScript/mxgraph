@@ -7,12 +7,17 @@ function Workspace(sidebar)
 {
     this.sidebar = sidebar;
     this.editorUi = sidebar.editorUi;
+    this.currentItem = {
+        name: "",
+        contents: ""
+    }
     this.init();
 };
 
 Workspace.prototype.init = function()
 {
     this.createUnityWorkspace();
+    this.addSpecialKeyHandlers();
 }
 
 Workspace.prototype.destroy = function()
@@ -20,14 +25,30 @@ Workspace.prototype.destroy = function()
 
 }
 
-Workspace.prototype.showViewer = function(contents)
+Workspace.prototype.addSpecialKeyHandlers = function()
 {
-    this.unityWorkspace.style.visibility = 'visible';
-}
+    const self = this;
 
-Workspace.prototype.hideViewer = function()
-{
-    this.unityWorkspace.style.visibility = 'hidden';
+    $(window).bind('keydown', function(event) {
+        if (event.ctrlKey || event.metaKey) {
+            switch (String.fromCharCode(event.which).toLowerCase()) {
+                case 's':
+                    event.preventDefault();
+                    self.saveCurrentFile(function() {
+                        // do something useful here
+                    });
+                    break;
+                case 'f':
+                    event.preventDefault();
+                    alert('ctrl-f');
+                    break;
+                case 'g':
+                    event.preventDefault();
+                    alert('ctrl-g');
+                    break;
+            }
+        }
+    });
 }
 
 /**
@@ -100,6 +121,24 @@ Workspace.prototype.getFile = function(name, fn)
     listRequest.send(nameBase64);
 }
 
+Workspace.prototype.saveCurrentFile = function(fn)
+{
+    const saveRequest = new XMLHttpRequest();
+    saveRequest.open('POST', 'http://127.0.0.1:10002/workspace/save', true);
+    saveRequest.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status == 200) {
+            fn();
+        }
+    }
+    // workspaceItem
+    let contents = this.editorUi.blockEditor.getContents();
+    contents = btoa(contents);
+    this.currentItem.contents = contents;
+    const requestStr = JSON.stringify(this.currentItem);
+    const requestBase64Str = btoa(requestStr);
+    saveRequest.send(requestBase64Str);
+}
+
 Workspace.prototype.createEntry = function(style, width, height, value, title, showLabel, showTitle, tags)
 {
     const self = this;
@@ -133,8 +172,10 @@ Workspace.prototype.createEntryElement = function(style, width, height, value, t
     mxEvent.addListener(elt, 'click', function(evt)
     {
         mxEvent.consume(evt);
+        self.currentItem.name = btoa(title);
         const blockEditor = self.editorUi.blockEditor;
         self.getFile(title, function(contents) {
+            self.currentItem.contents = btoa(contents);
             blockEditor.setCodeContents(contents);
         })
     });
