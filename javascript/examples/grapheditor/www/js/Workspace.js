@@ -53,32 +53,25 @@ Workspace.prototype.createUnityWorkspace = function()
 
 Workspace.prototype.getFiles = function(fn)
 {
-    const refreshRequest = new XMLHttpRequest();
-    refreshRequest.open('POST', 'http://127.0.0.1:10002/workspace/refresh', true);
-    refreshRequest.onreadystatechange = function() { // Call a function when the state changes.
+    const listRequest = new XMLHttpRequest();
+    listRequest.open('POST', 'http://127.0.0.1:10002/workspace/list', true);
+    listRequest.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE && this.status == 200) {
-            const listRequest = new XMLHttpRequest();
-            listRequest.open('POST', 'http://127.0.0.1:10002/workspace/list', true);
-            listRequest.onreadystatechange = function() { // Call a function when the state changes.
-                if (this.readyState === XMLHttpRequest.DONE && this.status == 200) {
-                    // Request finished. Do processing here.
-                    const responseBase64Str = this.responseText;
-                    const responseStr = atob(responseBase64Str);
-                    const responseJSON = JSON.parse(responseStr);
-                    const names = [];
-                    for (const itemKey in responseJSON.Payload) {
-                        const itemJSON = responseJSON.Payload[itemKey];
-                        const nameBase64 = itemJSON.name;
-                        const nameStr = atob(nameBase64);
-                        names.push(nameStr);
-                    }
-                    fn(names);
-                }
+            // Request finished. Do processing here.
+            const responseBase64Str = this.responseText;
+            const responseStr = atob(responseBase64Str);
+            const responseJSON = JSON.parse(responseStr);
+            const names = [];
+            for (const itemKey in responseJSON.Payload) {
+                const itemJSON = responseJSON.Payload[itemKey];
+                const nameBase64 = itemJSON.name;
+                const nameStr = atob(nameBase64);
+                names.push(nameStr);
             }
-            listRequest.send();
+            fn(names);
         }
     }
-    refreshRequest.send();
+    listRequest.send();
 }
 
 
