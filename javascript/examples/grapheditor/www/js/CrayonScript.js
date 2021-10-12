@@ -31,7 +31,7 @@ CrayonScript.prototype.init = function() {
                 blockEditor.hideDataView();
                 let code = this.getCode(cell);
                 code = code.trim();
-                blockEditor.showCodeView(code);
+                blockEditor.showCodeView();
             }
         }
     }));

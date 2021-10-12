@@ -38,6 +38,10 @@ BlockEditor.prototype.hideDataView = function()
 BlockEditor.prototype.showCodeView = function(contents)
 {
     this.codeEditorContainer.style.visibility = 'visible';
+}
+
+BlockEditor.prototype.setCodeContents = function(contents)
+{
     this.codeEditor.setValue(contents, 1);
 }
 

@@ -74,6 +74,32 @@ Workspace.prototype.getFiles = function(fn)
     listRequest.send();
 }
 
+Workspace.prototype.getFile = function(name, fn)
+{
+    const listRequest = new XMLHttpRequest();
+    listRequest.open('POST', 'http://127.0.0.1:10002/workspace/get', true);
+    listRequest.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status == 200) {
+            // Request finished. Do processing here.
+            const responseBase64Str = this.responseText;
+            if (responseBase64Str)
+            {
+                const responseStr = atob(responseBase64Str);
+                const responseJSON = JSON.parse(responseStr);
+                const contentsBase64 = responseJSON.contents;
+                const contentsStr = atob(contentsBase64);
+                fn(contentsStr);
+            }
+            else
+            {
+                fn("");
+            }
+        }
+    }
+    const nameBase64 = btoa(name);
+    listRequest.send(nameBase64);
+}
+
 Workspace.prototype.createEntry = function(style, width, height, value, title, showLabel, showTitle, tags)
 {
     const self = this;
@@ -101,22 +127,21 @@ Workspace.prototype.createEntryElement = function(style, width, height, value, t
     //titleDiv.appendChild(node);
     elt.appendChild(titleDiv);
 
+    const self = this;
+
     // Blocks default click action
     mxEvent.addListener(elt, 'click', function(evt)
     {
         mxEvent.consume(evt);
+        const blockEditor = self.editorUi.blockEditor;
+        self.getFile(title, function(contents) {
+            blockEditor.setCodeContents(contents);
+        })
     });
 
     return elt;
 };
 
-/**
- * Creates a drop handler for inserting the given cells.
- */
-Workspace.prototype.createVertexTemplateFromCells = function(cells, width, height, title, showLabel, showTitle, allowCellsInserted)
-{
-
-};
 
 
 

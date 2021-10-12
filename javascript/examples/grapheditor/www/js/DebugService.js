@@ -22,8 +22,8 @@ DebugService.prototype.sendDebugRequest = function (debugRequest)
     const unityService = this.editorUI.unityService;
     unityService.postRequest('debug', debugRequest);
 
-    const webglService = this.editorUI.webglViewer;
-    webglService.sendRequest('debug', debugRequest);
+    // const webglService = this.editorUI.webglViewer;
+    // webglService.sendRequest('debug', debugRequest);
 }
 
 DebugService.prototype.refreshUnity = function()
