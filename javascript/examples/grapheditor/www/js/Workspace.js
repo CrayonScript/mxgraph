@@ -35,18 +35,18 @@ Workspace.prototype.hideViewer = function()
  */
 Workspace.prototype.createUnityWorkspace = function()
 {
-    const sidebar = this.sidebar;
-    sidebar.setCurrentSearchEntryLibrary('workspace', 'workspace');
+    const self = this;
+    self.sidebar.setCurrentSearchEntryLibrary('workspace', 'workspace');
 
-    this.getFiles(function(files) {
+    self.getFiles(function(files) {
         const fns = [];
         for (const filesKey in files) {
-            var fileName = files[filesKey];
-            var fn = sidebar.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', `${fileName}`, null, null, 'rect rectangle box');
+            const fileName = files[filesKey];
+            const fn = self.createEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', `${fileName}`, null, null, 'rect rectangle box');
             fns.push(fn);
         }
-        sidebar.addPaletteFunctions('workspace', mxResources.get('workspace'), true, fns);
-        sidebar.setCurrentSearchEntryLibrary();
+        self.sidebar.addPaletteFunctions('workspace', mxResources.get('workspace'), true, fns);
+        self.sidebar.setCurrentSearchEntryLibrary();
     });
 
 };
@@ -74,6 +74,49 @@ Workspace.prototype.getFiles = function(fn)
     listRequest.send();
 }
 
+Workspace.prototype.createEntry = function(style, width, height, value, title, showLabel, showTitle, tags)
+{
+    const self = this;
+
+    tags = (tags != null && tags.length > 0) ? tags : ((title != null) ? title.toLowerCase() : '');
+
+    return this.sidebar.addEntry(tags, mxUtils.bind(this, function()
+    {
+        return self.createEntryElement(style, width, height, value, title, showLabel, showTitle);
+    }));
+}
+
+Workspace.prototype.createEntryElement = function(style, width, height, value, title, showLabel, showTitle, allowCellsInserted)
+{
+    const elt = document.createElement('a');
+    elt.className = 'geItem';
+    elt.style.overflow = 'hidden';
+    elt.style.width = width * 5 + 'px';
+    elt.style.height = height + 'px';
+    elt.style.padding = '2px';
+    elt.style.width = width * 5 + 'px';
+
+    const titleDiv = document.createElement('div');
+    titleDiv.innerHTML = title;
+    //titleDiv.appendChild(node);
+    elt.appendChild(titleDiv);
+
+    // Blocks default click action
+    mxEvent.addListener(elt, 'click', function(evt)
+    {
+        mxEvent.consume(evt);
+    });
+
+    return elt;
+};
+
+/**
+ * Creates a drop handler for inserting the given cells.
+ */
+Workspace.prototype.createVertexTemplateFromCells = function(cells, width, height, title, showLabel, showTitle, allowCellsInserted)
+{
+
+};
 
 
 
