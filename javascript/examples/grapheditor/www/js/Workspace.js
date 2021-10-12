@@ -36,17 +36,50 @@ Workspace.prototype.hideViewer = function()
 Workspace.prototype.createUnityWorkspace = function()
 {
     const sidebar = this.sidebar;
-    const lineTags = 'line lines connector connectors connection connections arrow arrows ';
     sidebar.setCurrentSearchEntryLibrary('workspace', 'workspace');
 
-    var fns = [
-        sidebar.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
-        sidebar.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
-    ];
+    this.getFiles(function(files) {
+        const fns = [];
+        for (const filesKey in files) {
+            var fileName = files[filesKey];
+            var fn = sidebar.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', `${fileName}`, null, null, 'rect rectangle box');
+            fns.push(fn);
+        }
+        sidebar.addPaletteFunctions('workspace', mxResources.get('workspace'), true, fns);
+        sidebar.setCurrentSearchEntryLibrary();
+    });
 
-    sidebar.addPaletteFunctions('workspace', mxResources.get('workspace'), true, fns);
-    sidebar.setCurrentSearchEntryLibrary();
 };
+
+Workspace.prototype.getFiles = function(fn)
+{
+    const refreshRequest = new XMLHttpRequest();
+    refreshRequest.open('POST', 'http://127.0.0.1:10002/workspace/refresh', true);
+    refreshRequest.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status == 200) {
+            const listRequest = new XMLHttpRequest();
+            listRequest.open('POST', 'http://127.0.0.1:10002/workspace/list', true);
+            listRequest.onreadystatechange = function() { // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status == 200) {
+                    // Request finished. Do processing here.
+                    const responseBase64Str = this.responseText;
+                    const responseStr = atob(responseBase64Str);
+                    const responseJSON = JSON.parse(responseStr);
+                    const names = [];
+                    for (const itemKey in responseJSON.Payload) {
+                        const itemJSON = responseJSON.Payload[itemKey];
+                        const nameBase64 = itemJSON.name;
+                        const nameStr = atob(nameBase64);
+                        names.push(nameStr);
+                    }
+                    fn(names);
+                }
+            }
+            listRequest.send();
+        }
+    }
+    refreshRequest.send();
+}
 
 
 
