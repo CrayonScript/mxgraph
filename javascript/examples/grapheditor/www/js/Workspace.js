@@ -59,7 +59,7 @@ Workspace.prototype.createUnityWorkspace = function()
     const self = this;
     self.sidebar.setCurrentSearchEntryLibrary('workspace', 'workspace');
 
-    self.getFiles(function(files) {
+    self.initWorkspace(function(files) {
         const fns = [];
         for (const filesKey in files) {
             const fileName = files[filesKey];
@@ -72,10 +72,10 @@ Workspace.prototype.createUnityWorkspace = function()
 
 };
 
-Workspace.prototype.getFiles = function(fn)
+Workspace.prototype.initWorkspace = function(fn)
 {
     const listRequest = new XMLHttpRequest();
-    listRequest.open('POST', 'http://127.0.0.1:10002/workspace/list', true);
+    listRequest.open('POST', 'http://127.0.0.1:10002/workspace/init', true);
     listRequest.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE && this.status == 200) {
             // Request finished. Do processing here.
@@ -92,7 +92,8 @@ Workspace.prototype.getFiles = function(fn)
             fn(names);
         }
     }
-    listRequest.send();
+    const debugData = this.editorUi.debugService.importDebugData();
+    listRequest.send(debugData);
 }
 
 Workspace.prototype.getFile = function(name, fn)

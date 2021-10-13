@@ -3829,6 +3829,8 @@ EditorUi.prototype.createSidebarFooterContainer = function()
  */
 EditorUi.prototype.createUi = function()
 {
+	this.debugService = new DebugService(this);
+
 	// Creates menubar
 	this.menubar = (this.editor.chromeless) ? null : this.menus.createMenubar(this.createDiv('geMenubar'));
 
@@ -3942,7 +3944,6 @@ EditorUi.prototype.createUi = function()
 	this.container.appendChild(this.blockEditorContainer);
 	// this.webglViewer = this.createWebglViewer(this.webglContainer);
 	this.unityService = new UnityService(this);
-	this.debugService = new DebugService(this);
 	this.blockEditor = this.createBlockEditor(
 		this.blockEditorContainer,
 		this.debugService);

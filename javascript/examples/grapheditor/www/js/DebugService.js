@@ -29,15 +29,13 @@ DebugService.prototype.sendDebugRequest = function (debugRequest)
 DebugService.prototype.refreshUnity = function()
 {
     const xmlHTTP = new XMLHttpRequest();
-    xmlHTTP.open('POST', 'http://127.0.0.1:10002/source', true);
+    xmlHTTP.open('POST', 'http://127.0.0.1:10002/unity/refresh', true);
     xmlHTTP.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE) {
             // Request finished. Do processing here.
         }
     }
-    const source = this.editorUI.blockEditor.getContents();
-    const base64Source = btoa(source)
-    xmlHTTP.send(base64Source);
+    xmlHTTP.send();
 }
 
 DebugService.prototype.setBreakpoint = function(row)
