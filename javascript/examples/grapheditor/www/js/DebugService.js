@@ -38,7 +38,7 @@ DebugService.prototype.refreshUnity = function()
     xmlHTTP.send();
 }
 
-DebugService.prototype.setBreakpoint = function(row)
+DebugService.prototype.setBreakpoint = function(sourceName, row)
 {
     const tokens = getSourceCodeTokens();
     const sourceLine = (row + 1);
@@ -49,7 +49,8 @@ DebugService.prototype.setBreakpoint = function(row)
     const req = {
         cmd: "breakpoint",
         arg: "set",
-        sourceId: 1,
+        sourceName: sourceName,
+        sourceId: 0,
         sourceLine: sourceLine,
         sourceCol: sourceCol
     }
@@ -59,7 +60,7 @@ DebugService.prototype.setBreakpoint = function(row)
     return true;
 }
 
-DebugService.prototype.clearBreakpoint = function(row)
+DebugService.prototype.clearBreakpoint = function(sourceName, row)
 {
     const tokens = getSourceCodeTokens();
     const sourceLine = (row + 1);
@@ -70,6 +71,7 @@ DebugService.prototype.clearBreakpoint = function(row)
     const req = {
         cmd: "breakpoint",
         arg: "clear",
+        sourceName: sourceName,
         sourceId: 1,
         sourceLine: sourceLine,
         sourceCol: sourceCol

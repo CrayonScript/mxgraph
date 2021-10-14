@@ -45,6 +45,11 @@ BlockEditor.prototype.setCodeContents = function(contents)
     this.codeEditor.setValue(contents, 1);
 }
 
+BlockEditor.prototype.setCodeName = function(codeName)
+{
+    this.codeName = codeName;
+}
+
 BlockEditor.prototype.hideCodeView = function()
 {
     this.codeEditorContainer.style.visibility = 'hidden';
@@ -64,6 +69,8 @@ BlockEditor.prototype.createCodeEditor = function()
     //
     // ace editor
     //
+
+    var self = this;
 
     var editorId = 'geCodeEditorContainer';
     var elt = document.createElement('div');
@@ -91,11 +98,11 @@ BlockEditor.prototype.createCodeEditor = function()
         const breakpoints = editor.session.getBreakpoints(row, 0);
         // If there's a breakpoint already defined, it should be removed, offering the toggle feature
         if(typeof breakpoints[row] === typeof undefined){
-            if (debugService.setBreakpoint(row)) {
+            if (debugService.setBreakpoint(self.codeName, row)) {
                 editor.session.setBreakpoint(row);
             }
         }else{
-            if (debugService.clearBreakpoint(row)) {
+            if (debugService.clearBreakpoint(self.codeName, row)) {
                 editor.session.clearBreakpoint(row);
             }
         }

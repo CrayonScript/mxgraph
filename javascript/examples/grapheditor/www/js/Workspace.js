@@ -177,6 +177,7 @@ Workspace.prototype.createEntryElement = function(style, width, height, value, t
         const blockEditor = self.editorUi.blockEditor;
         self.getFile(title, function(contents) {
             self.currentItem.contents = btoa(contents);
+            blockEditor.setCodeName(title);
             blockEditor.setCodeContents(contents);
         })
     });
