@@ -104,12 +104,8 @@ function isValidSourceCodeAtLine(tokens, sourceLine)
 
 function getSourceCodeCol(tokens, sourceLine)
 {
-    let sourceCol = 0;
     const token = tokens[sourceLine];
     const tokenObj = token.at(-1);
-    if (tokenObj.type == 32)
-    {
-        sourceCol = tokenObj.range[1] - tokenObj.lineStart;
-    }
+    let sourceCol = tokenObj.range[1] - tokenObj.lineStart;
     return sourceCol;
 }
